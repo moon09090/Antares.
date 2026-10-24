@@ -1,55 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="gold">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07080f">
 <title>Antares — AI App & Game Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='17' fill='%23211b38'/%3E%3Cpath d='M32 8 52 52H40l-8-19-8 19H12L32 8Z' fill='%23a58bff'/%3E%3C/svg%3E">
 <style>
-:root{color-scheme:dark;--bg:#090b13;--panel:#111522;--line:#252b40;--text:#edf0ff;--muted:#9aa5c0;--accent:#9a83ff}
+:root{--bg:#07080f;--panel:rgba(18,20,34,.74);--panel2:#0c0e1a;--field:#090b15;--line:#262b42;--line2:#363d5e;--text:#f1efff;--muted:#a3a0ba;--accent:#a58bff;--accent2:#e063d2;--gold:#f0cd7a;--btn:#1a1e33;--glow1:#4b34b8;--glow2:#9c2f7c;--tint:#1b1634;--tint2:#2b2250;--star:255,255,255;--ok:#6ee7b7;--bad:#ff7a93;color-scheme:dark}
+[data-theme=aurora]{--bg:#041010;--panel:rgba(9,28,28,.74);--panel2:#08191a;--field:#061314;--line:#1c3b3a;--line2:#2a5553;--text:#e9fffb;--muted:#92b8b1;--accent:#4fe3c1;--accent2:#4aa8ff;--gold:#aef5e2;--btn:#0f2a2a;--glow1:#0b8f78;--glow2:#1c4fa8;--tint:#0b2926;--tint2:#134a44;--star:170,255,235}
+[data-theme=rose]{--bg:#0d0709;--panel:rgba(32,15,20,.74);--panel2:#190c11;--field:#12080c;--line:#3a1f29;--line2:#573042;--text:#fff0f4;--muted:#c0a0ab;--accent:#ff7fa8;--accent2:#ff9a5c;--gold:#ffd0a3;--btn:#2a121b;--glow1:#8c2349;--glow2:#a8552a;--tint:#2b1019;--tint2:#4a1b2d;--star:255,190,205}
+[data-theme=ivory]{--bg:#f5f0e6;--panel:rgba(255,252,246,.88);--panel2:#eee6d6;--field:#fffdf8;--line:#ddd1ba;--line2:#c9b998;--text:#231c10;--muted:#6c6250;--accent:#6a4fe0;--accent2:#c2418f;--gold:#a67a17;--btn:#fbf6ea;--glow1:#c9b6ff;--glow2:#ffc2dd;--tint:#ece3f8;--tint2:#ddd0f3;--star:106,79,224;--ok:#0f9f6e;--bad:#d6264f;color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,sans-serif}
-button,textarea,input{font:inherit}
-button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 13px;background:#1b2134;color:var(--text)}
-button:hover{border-color:var(--accent)}button:disabled{opacity:.5;cursor:wait}
-.primary{background:linear-gradient(120deg,#7957ed,#b45fe0);border:0;font-weight:700}
-header{padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:12px}.brand strong{display:block;letter-spacing:3px;font-size:18px}
-.brand small,p,.note{color:var(--muted)}.logo{width:42px;height:42px}
-.badge{padding:7px 12px;background:#2a1b2e;border:1px solid #6c3a58;border-radius:30px;color:#ffb3c9;font-size:11px;white-space:nowrap}
-.badge.ok{background:#1b2e2a;border-color:#3a6c58;color:#a8f0cf}
-main{max-width:1500px;margin:auto;padding:22px;display:grid;grid-template-columns:370px 1fr;gap:20px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.builder{padding:20px}h1{font-size:26px;letter-spacing:-1px;margin:0 0 8px}p{line-height:1.6;margin:0 0 6px}
-label{display:block;color:#cbd2e9;margin:16px 0 7px}
-input,textarea{width:100%;background:#0b0f1b;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px}
-textarea{resize:vertical;min-height:140px}input:focus,textarea:focus{outline:1px solid var(--accent)}
-details{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#0e1220}
-summary{cursor:pointer;color:#cfbfff;font-weight:600}.note{font-size:12px}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.chips button{font-size:12px;padding:6px 10px}
-select{width:100%;margin-top:8px;background:#0b0f1b;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.wide{width:100%;margin-top:12px}
-.workspace{display:flex;flex-direction:column;min-height:720px}
-.toolbar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:14px;border-bottom:1px solid var(--line)}
-.toolbar strong{margin-right:auto}.toolbar button{padding:8px 11px;font-size:13px}
-.tabs{display:flex;gap:7px;padding:10px 14px;background:#0e1220}.tabs .active{background:#33274e;border-color:#8060b4}
-.err{display:flex;gap:10px;align-items:center;padding:9px 14px;background:#3d1020;border-bottom:1px solid #e01e37;font-size:13px}
-.err span{flex:1}.stage{flex:1;padding:14px;display:flex;min-height:520px;background:radial-gradient(ellipse at top,#201a36,transparent 65%)}
-iframe{width:100%;min-height:520px;border:1px solid var(--line);border-radius:12px;background:#fff}
-#source{min-height:520px;font:12px/1.6 ui-monospace,monospace;white-space:pre;resize:none}
-#console{flex:1;margin:0;padding:12px;overflow:auto;background:#0a0812;color:#ffd9c2;font:12px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:12px;white-space:pre-wrap;min-height:520px}
-#device{width:auto;margin:0 0 0 auto;padding:8px}iframe{margin:0 auto}
-#toast{position:fixed;left:12px;right:12px;bottom:16px;z-index:9;background:#1b2134;border:1px solid var(--accent);border-radius:12px;padding:12px 14px;font-size:13px;display:none;white-space:pre-wrap}
-.tabs{flex-wrap:wrap}
-.fs iframe{position:fixed;inset:0;z-index:20;width:100vw;height:100vh;max-width:none!important;border-radius:0;margin:0}
-#exitfs{display:none}.fs #exitfs{display:block;position:fixed;top:10px;right:10px;z-index:30;background:#33274e}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;overflow-x:hidden;transition:background .4s}
+#bg{position:fixed;inset:0;z-index:-2;pointer-events:none}
+body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(120px);opacity:.33;pointer-events:none;animation:drift 24s ease-in-out infinite alternate}
+body::before{width:560px;height:560px;background:var(--glow1);top:-180px;left:-140px}
+body::after{width:500px;height:500px;background:var(--glow2);bottom:-180px;right:-120px;animation-delay:-10s}
+@keyframes drift{to{transform:translate(100px,70px) scale(1.15)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+button,textarea,input,select{font:inherit}
+button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:var(--btn);color:var(--text);transition:.15s}
+button:hover{border-color:var(--accent);transform:translateY(-1px)}
+button:disabled{opacity:.5;cursor:wait;transform:none}
+button.ghost{background:transparent}button.sm{padding:5px 9px;font-size:12px;border-radius:8px}
+.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;border:0;font-weight:700;position:relative;overflow:hidden;box-shadow:0 8px 28px -10px var(--accent)}
+.primary::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);animation:shine 4.5s infinite;pointer-events:none}
+@keyframes shine{60%,100%{transform:translateX(120%)}}
+.gold{background:linear-gradient(120deg,#c79a3b,#f6dc92);color:#2a1f05;border:0;font-weight:700}
+.pulse{border-color:var(--gold)!important;box-shadow:0 0 0 3px rgba(240,205,122,.28)}
 .hidden{display:none!important}
-.status{padding:11px 16px;color:var(--muted);border-top:1px solid var(--line);font-size:12px;white-space:pre-wrap}
-.history{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
-.history button{width:100%;text-align:left;margin-top:7px;font-size:12px}
-@media(max-width:900px){main{grid-template-columns:1fr;padding:12px}header{padding:12px 14px}.workspace{min-height:600px}}
+header{padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(16px);position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:12px}.brand strong{display:block;letter-spacing:5px;font-size:18px;background:linear-gradient(90deg,var(--text),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small,p,.note{color:var(--muted)}.logo{width:42px;height:42px;filter:drop-shadow(0 0 14px var(--accent))}
+.cmdk{flex:1;max-width:420px;text-align:left;color:var(--muted);background:var(--field);display:flex;justify-content:space-between;gap:10px}
+.cmdk kbd{margin:0}
+.hright{display:flex;gap:8px;align-items:center}
+.badge{padding:7px 12px;background:var(--tint);border:1px solid var(--line2);border-radius:30px;color:var(--bad);font-size:11px;white-space:nowrap;cursor:pointer}
+.badge.ok{color:var(--ok)}.badge.cost{color:var(--gold);cursor:default}
+main{max-width:1640px;margin:auto;padding:20px;display:grid;grid-template-columns:410px 1fr;gap:20px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;backdrop-filter:blur(16px);box-shadow:0 24px 70px -34px #000}
+.side{padding:16px 18px 20px;position:sticky;top:76px;max-height:calc(100vh - 96px);overflow:auto;scrollbar-width:thin}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--field);border:1px solid var(--line);border-radius:13px;padding:4px;margin-bottom:14px}
+.seg button{border:0;background:transparent;padding:8px 4px;font-size:12px;border-radius:9px;color:var(--muted)}
+.seg button.on{background:linear-gradient(120deg,var(--tint2),var(--tint));color:var(--text);box-shadow:inset 0 0 0 1px var(--line2)}
+h1{font-size:27px;letter-spacing:-1px;margin:0 0 6px;line-height:1.1;background:linear-gradient(120deg,var(--text) 15%,var(--accent) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+p{line-height:1.6;margin:0 0 6px}
+label{display:block;color:var(--muted);margin:14px 0 6px;font-size:13px}
+.lrow{display:flex;justify-content:space-between;align-items:center;margin:14px 0 6px}.lrow label{margin:0}
+input,textarea,select{width:100%;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+textarea{resize:vertical;min-height:120px}input:focus,textarea:focus,select:focus{outline:1px solid var(--accent)}
+input[type=checkbox]{width:auto}input[type=color]{padding:2px;height:38px}
+details{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--panel2)}
+summary{cursor:pointer;color:var(--accent);font-weight:600}.note{font-size:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.chips button{font-size:12px;padding:6px 10px;border-radius:20px}
+.chips button.on{background:linear-gradient(120deg,var(--tint2),var(--tint));border-color:var(--accent);color:var(--text)}
+.cat{width:100%;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-top:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.wide{width:100%;margin-top:10px}
+.cb{display:flex!important;align-items:center;gap:6px;margin:0!important;font-size:12px;color:var(--muted)!important}
+.mline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0 0;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);font-size:12px;color:var(--muted)}
+.mline b{color:var(--text);word-break:break-all}
+.workspace{display:flex;flex-direction:column;min-height:780px;position:relative}
+.prog{height:3px;background:var(--line);overflow:hidden}.prog i{display:block;height:100%;width:35%;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2));animation:slide 1.2s ease-in-out infinite}
+@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(300%)}}
+.toolbar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line)}
+.ttl{margin-right:auto;min-width:0}.ttl strong{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:360px}.ttl small{color:var(--muted);font-size:11px}
+.toolbar button{padding:8px 11px;font-size:13px}
+.menu{position:relative}.mpop{position:absolute;right:0;top:calc(100% + 6px);z-index:30;min-width:240px;background:var(--panel2);border:1px solid var(--line2);border-radius:14px;padding:6px;box-shadow:0 20px 50px -10px #000}
+.mpop button{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:9px;font-size:13px}.mpop button:hover{background:var(--tint);transform:none}
+.mpop small{display:block;color:var(--muted);font-size:11px}
+.tabs{display:flex;gap:7px;padding:9px 14px;background:var(--panel2);flex-wrap:wrap;align-items:center}.tabs>button.active{background:linear-gradient(120deg,var(--tint2),var(--tint));border-color:var(--accent)}
+.tabs select{width:auto;padding:7px 8px}.tabs .sp{margin-left:auto;display:flex;gap:6px;align-items:center}
+.err{display:flex;gap:10px;align-items:center;padding:9px 14px;background:#3d1020;color:#ffd8e0;border-bottom:1px solid #e01e37;font-size:13px}
+.err span{flex:1}
+.stage{flex:1;padding:14px;display:flex;min-height:580px;background:radial-gradient(ellipse at top,var(--tint),transparent 65%)}
+iframe{width:100%;min-height:580px;border:1px solid var(--line);border-radius:12px;background:#fff;margin:0 auto;transition:max-width .25s}
+iframe.framed{border:8px solid #111;border-radius:30px;box-shadow:0 30px 80px -20px #000;min-height:0}
+#codewrap{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
+.codebar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.codebar input{width:150px;padding:7px 10px}
+#source{flex:1;min-height:540px;font:12px/1.6 ui-monospace,Menlo,Consolas,monospace;white-space:pre;resize:none;tab-size:2}
+#console{flex:1;overflow:auto;padding:12px;background:#0a0812;color:#ffd9c2;font:12px/1.6 ui-monospace,monospace;border:1px solid var(--line);border-radius:12px;min-height:560px}
+.cl{white-space:pre-wrap;border-bottom:1px solid #1b1630;padding:1px 0}.cl.error{color:#ff8da1}.cl.warn{color:#ffd37a}
+#versions,#chat{flex:1;min-height:560px;min-width:0}#versions{overflow:auto;padding:2px}
+#chat{display:flex;flex-direction:column;gap:10px}
+#chatlog{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:2px;min-height:380px;max-height:62vh}
+.msg{max-width:88%;padding:10px 13px;border-radius:14px;border:1px solid var(--line);white-space:pre-wrap;font-size:13px;line-height:1.55}
+.msg small{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}
+.msg.u{align-self:flex-end;background:linear-gradient(120deg,var(--tint2),var(--tint));border-color:var(--line2)}.msg.a{align-self:flex-start;background:var(--panel2)}
+.chatin{display:flex;gap:8px}.chatin textarea{min-height:46px;height:46px}
+.ver{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);margin-bottom:8px;flex-wrap:wrap}
+.ver.cur{border-color:var(--accent);background:var(--tint)}.ver .i{flex:1;min-width:140px}.ver b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ver small{color:var(--muted)}
+.box{padding:12px;border:1px dashed var(--line2);border-radius:12px;margin-bottom:10px;color:var(--muted);font-size:13px}
+.box q{display:block;color:var(--text);margin:6px 0 8px;white-space:pre-wrap}
+#toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:300;display:flex;flex-direction:column;gap:8px;align-items:center;width:min(580px,calc(100vw - 24px));pointer-events:none}
+.toast{pointer-events:auto;width:100%;background:var(--panel2);border:1px solid var(--accent);border-radius:13px;padding:11px 14px;font-size:13px;display:flex;align-items:center;gap:12px;box-shadow:0 16px 44px -10px #000;animation:pop .25s}
+.toast span{flex:1;white-space:pre-wrap}@keyframes pop{from{opacity:0;transform:translateY(10px)}}
+.fs iframe{position:fixed;inset:0;z-index:20;width:100vw;height:100vh!important;min-height:0!important;max-width:none!important;border-radius:0!important;border:0!important;margin:0}
+#exitfs{display:none}.fs #exitfs{display:block;position:fixed;top:10px;right:10px;z-index:30;background:var(--tint2)}
+.status{padding:10px 16px;color:var(--muted);border-top:1px solid var(--line);font-size:12px;white-space:pre-wrap}
+.row{display:flex;gap:6px;align-items:center}.row>*{flex:1}.row>.fit{flex:0 0 auto}
+.proj{display:flex;align-items:center;gap:4px;padding:8px 6px 8px 8px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);margin-top:7px;cursor:pointer;transition:.15s}
+.proj:hover{border-color:var(--accent)}.proj.on{border-color:var(--accent);background:var(--tint)}
+.proj .i{flex:1;min-width:0}.proj b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.proj small{color:var(--muted);font-size:11px}
+.proj button{padding:3px 6px;font-size:12px;border-radius:7px;background:transparent;border-color:transparent;color:var(--muted)}
+.proj button:hover{color:var(--text);border-color:var(--line2)}.proj button.del:hover{color:var(--bad);border-color:var(--bad)}.proj button.pin.on{color:var(--gold)}
+.tag{display:inline-block;background:var(--tint2);color:var(--text);border-radius:20px;padding:0 7px;font-size:10px;margin:3px 3px 0 0}
+.empty{padding:16px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px;margin-top:8px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.tile{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}
+.tile b{display:block;font-size:20px;background:linear-gradient(120deg,var(--text),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}.tile small{color:var(--muted)}
+.bar{margin-top:8px;font-size:12px}.bar i{display:block;height:8px;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin-top:3px}
+.lib{padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);margin-top:8px}.lib b{display:block}.lib p{font-size:12px;margin:3px 0 6px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+kbd{background:var(--btn);border:1px solid var(--line2);border-radius:5px;padding:0 5px;font-size:11px;margin:0 1px}
+.ovl{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);display:grid;place-items:center;padding:14px;animation:pop .2s}
+.mbox{width:min(520px,100%);max-height:90vh;display:flex;flex-direction:column;background:var(--panel2);border:1px solid var(--line2);border-radius:20px;box-shadow:0 40px 100px -20px #000}.mbox.wide{width:min(900px,100%)}
+.mhead{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.mbody{padding:16px 18px;overflow:auto}.mfoot{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px;border-top:1px solid var(--line)}
+.fld label{margin-top:12px}.fld .note{margin-top:4px}
+.pal{width:min(600px,100%);align-self:start;margin-top:12vh;background:var(--panel2);border:1px solid var(--line2);border-radius:18px;overflow:hidden;box-shadow:0 40px 100px -20px #000}
+.pal input{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:16px 18px;font-size:16px}.pal input:focus{outline:0}
+.pal .list{max-height:48vh;overflow:auto;padding:6px}.pal .it{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer}
+.pal .it.on{background:var(--tint2)}.pal .it small{color:var(--muted)}
+.diff{font:12px/1.55 ui-monospace,monospace;border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:60vh}
+.diff div{white-space:pre-wrap;padding:0 10px;word-break:break-all}.diff .add{background:rgba(110,231,183,.14);color:var(--ok)}.diff .del{background:rgba(255,122,147,.14);color:var(--bad)}.diff .gap{color:var(--muted);background:var(--tint);text-align:center}
+#splash{position:fixed;inset:0;z-index:500;display:grid;place-items:center;background:var(--bg);transition:opacity .8s,visibility .8s;cursor:pointer}
+#splash.out{opacity:0;visibility:hidden}#splash div{text-align:center}
+#splash svg{width:92px;height:92px;filter:drop-shadow(0 0 30px var(--accent));animation:float 2.4s ease-in-out infinite}
+#splash strong{display:block;margin-top:18px;font-size:22px;letter-spacing:12px;padding-left:12px;background:linear-gradient(90deg,var(--text),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;animation:track 1.6s ease-out}
+#splash small{color:var(--muted);letter-spacing:3px;font-size:11px}
+@keyframes float{50%{transform:translateY(-8px)}}@keyframes track{from{letter-spacing:2px;opacity:0}}
+@media(max-width:1000px){main{grid-template-columns:1fr;padding:12px}.side{position:static;max-height:none}header{padding:10px 14px}.cmdk{display:none}.workspace{min-height:600px}}
 </style>
 </head>
 <body>
+<canvas id="bg"></canvas>
+<div id="splash"><div>
+  <svg viewBox="0 0 64 64"><defs><linearGradient id="sg" x2="1" y2="1"><stop stop-color="#cab6ff"/><stop offset="1" stop-color="#7756f1"/></linearGradient></defs><rect width="64" height="64" rx="17" fill="#211b38"/><path d="M32 8 52 52H40l-8-19-8 19H12L32 8Z" fill="url(#sg)"/><path d="m43 12 2.5 6.5L52 21l-6.5 2.5L43 30l-2.5-6.5L34 21l6.5-2.5Z" fill="#fff"/></svg>
+  <strong>ANTARES</strong><small>AI APP &amp; GAME STUDIO</small>
+</div></div>
 <header>
   <div class="brand">
     <svg class="logo" viewBox="0 0 64 64" aria-label="Antares">
@@ -60,123 +148,460 @@ iframe{width:100%;min-height:520px;border:1px solid var(--line);border-radius:12
     </svg>
     <div><strong>ANTARES</strong><small>AI App & Game Studio</small></div>
   </div>
-  <span id="badge" class="badge">ADD OPENROUTER KEY</span>
+  <button id="cmdk" class="cmdk"><span>⌕ Search or run a command…</span><span><kbd>Ctrl</kbd><kbd>K</kbd></span></button>
+  <div class="hright"><span id="cost" class="badge cost hidden" title="Spend this session"></span><span id="credit" class="badge ok hidden"></span><span id="badge" class="badge" title="Open settings">ADD OPENROUTER KEY</span><button id="openHelp" class="sm" title="Keyboard shortcuts">?</button><button id="openSettings" class="sm" title="Settings (Ctrl+,)">⚙</button></div>
 </header>
 <main>
-<section class="panel builder">
-  <h1>Describe it.<br>Antares builds it.</h1>
-  <p>Full apps and games from one prompt, then refine, fix and export.</p>
-  <details id="settings" open>
-    <summary>AI settings (OpenRouter)</summary>
-    <label for="orKey">API key</label>
-    <input id="orKey" type="password" placeholder="sk-or-..." autocomplete="off">
-    <label for="orModel">Model ID</label>
-    <input id="orModel" list="models" placeholder="Copy exact ID from openrouter.ai/models">
-    <datalist id="models"><option value="openai/gpt-6.1-sol"></datalist>
-    <div class="two"><button id="loadModels">Load model list</button><label class="note" style="margin:0;display:flex;align-items:center;gap:6px"><input id="freeOnly" type="checkbox" style="width:auto"> Free only</label></div>
-    <select id="modelPick" class="hidden"></select>
-    <p class="note">Create a key at openrouter.ai/keys. Your key stays on this device only.</p>
-  </details>
-  <label for="name">Project name</label>
-  <input id="name" maxlength="80" value="My Antares App">
-  <label for="prompt">What should it build?</label>
-  <textarea id="prompt" placeholder="Be specific: controls, levels, scoring, colors, features..."></textarea>
-  <div class="chips">
-    <button data-prompt="Create a polished snake game with levels, increasing speed, saved high score, swipe and keyboard controls, sound effects and a game-over screen">Snake</button>
-    <button data-prompt="Create a 2D platformer game with coins, enemies, three levels, jump physics, touch buttons and keyboard controls">Platformer</button>
-    <button data-prompt="Create a task manager with categories, due dates, priorities, search, drag to reorder and saved data">Tasks</button>
-    <button data-prompt="Create an expense tracker dashboard with charts, monthly budget, categories and CSV export">Expenses</button><button data-prompt="Create a 3D endless runner with Three.js, neon style, lanes, obstacles, score, speed ramp and touch swipe controls">3D Runner</button><button data-prompt="Create a stunning landing page for an AI startup with hero, features, pricing, testimonials and FAQ">Website</button>
+<section class="panel side">
+  <nav class="seg" id="sideNav">
+    <button data-v="create" class="on">✦ Create</button><button data-v="projects">🗂 Projects</button><button data-v="prompts">📚 Prompts</button><button data-v="insights">📊 Insights</button>
+  </nav>
+
+  <div id="v-create" class="view">
+    <h1>Describe it.<br>Antares builds it.</h1>
+    <p>Apps and games from one prompt. Refine, fix, version, export.</p>
+    <div class="mline"><span>Model: <b id="mlabel">—</b></span><button id="openSettings2" class="sm">Change</button></div>
+    <label for="name">Project name</label>
+    <input id="name" maxlength="80" value="My Antares App">
+    <div class="lrow"><label for="prompt">What should it build?</label><span class="note" id="pcounter">0</span></div>
+    <textarea id="prompt" placeholder="Be specific: controls, levels, scoring, colors, features…  (Ctrl+Enter to build)"></textarea>
+    <div class="two"><button id="enhance" class="gold">✨ Enhance prompt</button><button id="savePrompt">★ Save prompt</button></div>
+    <div class="two"><select id="mode" title="Project type"><option value="">App / tool</option><option value="game2d">2D game</option><option value="game3d">3D game</option><option value="dash">Dashboard</option><option value="site">Website</option></select>
+      <select id="style" title="Visual style"><option value="">Style: AI decides</option><option>Luxury black and gold</option><option>Neon cyberpunk</option><option>Glassmorphism</option><option>Minimal and clean</option><option>Retro pixel arcade</option><option>Playful cartoon</option><option>Aurora gradients</option><option>Bold brutalist</option></select></div>
+    <label>Power-ups <span class="note">(tap to include)</span></label>
+    <div id="powers" class="chips" style="margin-top:0"></div>
+    <label class="cb" style="margin-top:12px!important"><input id="auto" type="checkbox"> Auto-fix runtime errors</label>
+    <button id="generate" class="primary wide">✦ Build with AI</button>
+    <button id="refine" class="wide">Refine current project</button>
+    <div id="qrBox" class="hidden"><label>Quick improvements</label><div id="qr" class="chips" style="margin-top:0"></div></div>
+    <details><summary>Template gallery</summary>
+      <input id="tplq" placeholder="Filter templates…" style="margin-top:10px"><div id="tpl" class="chips"></div></details>
   </div>
-  <div class="two"><select id="mode"><option value="">App / tool</option><option value="game2d">2D game</option><option value="game3d">3D game</option><option value="dash">Dashboard</option><option value="site">Website</option></select><label class="note" style="display:flex;align-items:center;gap:6px;margin:0"><input id="auto" type="checkbox" checked style="width:auto"> Auto-fix errors</label></div>
-  <button id="generate" class="primary wide">✦ Build with AI</button>
-  <button id="refine" class="wide">Refine current project</button>
-  <div class="history"><strong>Recent projects</strong><div id="history"></div></div>
+
+  <div id="v-projects" class="view hidden">
+    <div class="row" style="margin-bottom:8px"><strong>Projects <span id="pcount" class="note"></span></strong><button id="newProj" class="sm fit">＋ New</button></div>
+    <input id="psearch" placeholder="Search name, prompt or tag…">
+    <div class="two" style="margin-top:8px"><select id="psort"><option value="recent">Recent first</option><option value="oldest">Oldest first</option><option value="name">Name A–Z</option><option value="size">Largest</option></select><select id="ptag"></select></div>
+    <div id="plist"></div>
+    <div class="two"><button id="importBtn">⬆ Import</button><button id="exportAll">⬇ Export all</button></div>
+    <button id="clearAll" class="ghost wide">🗑 Clear unpinned</button>
+    <input id="importFile" type="file" accept=".json,.html,.htm,application/json,text/html" multiple class="hidden">
+    <p class="note" style="margin-top:8px">Tip: drag &amp; drop an .html or exported .json file anywhere on the page to import it.</p>
+  </div>
+
+  <div id="v-prompts" class="view hidden">
+    <strong>Saved prompts</strong><div id="saved"></div>
+    <div class="row" style="margin-top:18px"><strong>Recent builds</strong><button id="clearRecent" class="sm ghost fit">Clear</button></div>
+    <div id="recent"></div>
+  </div>
+
+  <div id="v-insights" class="view hidden"><strong>Studio insights</strong><div id="insights"></div></div>
 </section>
+
 <section class="panel workspace">
+  <div id="prog" class="prog hidden"><i></i></div>
   <div class="toolbar">
-    <strong id="projectTitle">Project preview</strong>
-    <button id="run">Run</button><button id="undo">Undo</button><button id="copy">Copy</button>
-    <button id="full">Fullscreen</button><button id="download" class="primary">Download</button>
+    <div class="ttl"><strong id="projectTitle">Project preview</strong><small id="meta"></small></div>
+    <button id="run" title="Run edited source">▶ Run</button><button id="undo">↩</button><button id="redo">↪</button><button id="copy">Copy</button>
+    <button id="newtab" title="Open in a new tab">↗</button><button id="full" title="Fullscreen preview">⛶</button>
+    <div class="menu"><button id="exportBtn">⋯ Export</button><div id="exportMenu" class="mpop hidden"></div></div>
+    <button id="download" class="primary">⬇ Download</button>
   </div>
-  <div class="tabs"><button id="previewTab" class="active">Live preview</button><button id="sourceTab">Source code</button><button id="consoleTab">Console</button><select id="device"><option value="100%">Responsive</option><option value="390px">Phone</option><option value="820px">Tablet</option></select></div>
+  <div class="tabs">
+    <button id="previewTab" class="active">Live preview</button><button id="sourceTab">Code</button><button id="consoleTab">Console</button><button id="versionsTab">History</button><button id="chatTab">Chat</button>
+    <div class="sp"><select id="conFilter" class="hidden"><option value="all">All logs</option><option value="warn">Warnings+</option><option value="error">Errors</option></select><button id="clearCons" class="hidden sm">Clear</button>
+      <button id="reload" class="sm" title="Reload preview">⟳</button><button id="rotate" class="sm" title="Rotate device">⤾</button>
+      <select id="device"><option value="r">Responsive</option><option value="p">Phone 390</option><option value="s">Small phone 360</option><option value="t">Tablet 820</option><option value="l">Laptop 1280</option></select></div>
+  </div>
   <div id="err" class="err hidden"><span id="errTxt"></span><button id="fix" class="primary">🛠 Fix with AI</button></div>
   <div class="stage">
     <iframe id="preview" title="Preview" allow="fullscreen" allowfullscreen sandbox="allow-scripts allow-modals allow-forms allow-pointer-lock" referrerpolicy="no-referrer"></iframe>
-    <pre id="console" class="hidden"></pre>
-    <textarea id="source" class="hidden" spellcheck="false" aria-label="Project source"></textarea>
+    <div id="console" class="hidden"></div>
+    <div id="codewrap" class="hidden">
+      <div class="codebar"><input id="find" placeholder="Find"><input id="repl" placeholder="Replace"><button id="findNext" class="sm">Next</button><button id="replAll" class="sm">Replace all</button><span id="fcount" class="note"></span>
+        <span style="margin-left:auto" class="row"><label class="cb"><input id="wrap" type="checkbox"> Wrap</label><button id="fminus" class="sm fit">A−</button><button id="fplus" class="sm fit">A+</button></span></div>
+      <textarea id="source" spellcheck="false" aria-label="Project source"></textarea>
+    </div>
+    <div id="versions" class="hidden"></div>
+    <div id="chat" class="hidden">
+      <div id="chatlog"></div>
+      <div id="qr2" class="chips" style="margin-top:0"></div>
+      <div class="chatin"><textarea id="chatIn" placeholder="Ask Antares to change something… (Enter to send, Shift+Enter for a new line)"></textarea><button id="chatSend" class="primary fit">Send</button></div>
+    </div>
   </div>
   <div id="status" class="status" role="status">Ready. Add your OpenRouter key, describe your project and tap Build.</div>
 </section>
 </main>
 <button id="exitfs">✕ Exit fullscreen</button>
-<div id="toast"></div>
+<div id="toasts"></div>
 <script>
-const $=id=>document.getElementById(id),F='`'.repeat(3),LS=localStorage,say=t=>{$('status').textContent=t;const o=$('toast');o.textContent=t;o.style.display='block';clearTimeout(window._t);window._t=setTimeout(()=>o.style.display='none',t.startsWith('✦')?90000:7000)};
+'use strict';
+/* ================= core helpers ================= */
+const $=id=>document.getElementById(id),F='`'.repeat(3),LS=localStorage,API='https://openrouter.ai/api/v1';
+const MAX_PROJECTS=100,MAX_VERSIONS=15,THEMES={gold:'Midnight Gold',aurora:'Aurora',rose:'Obsidian Rose',ivory:'Ivory Light'};
+function h(tag,a,...k){const e=document.createElement(tag);for(const n in a||{}){const v=a[n];if(v==null)continue;if(n==='class')e.className=v;else if(n==='text')e.textContent=v;else if(n.startsWith('on'))e[n]=v;else if(n==='value'||n==='checked'||n==='disabled')e[n]=v;else e.setAttribute(n,v)}k.flat(9).forEach(c=>{if(c!=null&&c!==false)e.append(c.nodeType?c:document.createTextNode(String(c)))});return e}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const kb=n=>n<1024?n+' B':(n/1024).toFixed(1)+' KB';
+const fmtN=n=>n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(1)+'k':String(Math.round(n));
+function ago(t){const s=Math.max(1,Math.round((Date.now()-t)/1000));if(s<60)return 'just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago'}
+const store={get(k,d){try{const v=JSON.parse(LS.getItem(k));return v==null?d:v}catch{return d}},set(k,v){try{LS.setItem(k,JSON.stringify(v));return true}catch{return false}}};
+const strBytes=s=>new TextEncoder().encode(s);
+const safeName=s=>(String(s).replace(/[^a-z0-9_-]/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'')||'antares-app');
+function toast(t,o){o=o||{};const box=$('toasts'),el=h('div',{class:'toast'},h('span',{text:t}));if(o.label)el.append(h('button',{class:'sm',text:o.label,onclick:()=>{el.remove();o.action()}}));box.append(el);while(box.children.length>3)box.firstChild.remove();setTimeout(()=>el.remove(),o.ms||4500)}
+function say(t,quiet){$('status').textContent=t;if(!quiet)toast(t)}
+function modal(title,body,buttons,opts){opts=opts||{};const ov=h('div',{class:'ovl'});
+ const close=()=>{ov.remove();removeEventListener('keydown',esc,true);if(opts.onClose)opts.onClose()};
+ const esc=e=>{if(e.key==='Escape'){e.stopPropagation();close()}};
+ const box=h('div',{class:'mbox'+(opts.wide?' wide':'')},h('div',{class:'mhead'},h('strong',{text:title}),h('button',{class:'sm ghost',text:'✕',onclick:close})),h('div',{class:'mbody'},body),buttons&&buttons.length?h('div',{class:'mfoot'},buttons.map(b=>h('button',{class:b.cls||'',text:b.label,onclick:()=>{if(b.run&&b.run()===false)return;close()}}))):null);
+ ov.append(box);ov.onmousedown=e=>{if(e.target===ov)close()};addEventListener('keydown',esc,true);document.body.append(ov);return{close,box}}
+function askText(title,val,ph){return new Promise(res=>{let done=false;const fin=v=>{if(!done){done=true;res(v)}};const i=h('input',{type:'text',value:val||'',placeholder:ph||''});
+ const m=modal(title,i,[{label:'Cancel',cls:'ghost'},{label:'Save',cls:'primary',run:()=>{fin(i.value.trim())}}],{onClose:()=>fin(null)});
+ i.onkeydown=e=>{if(e.key==='Enter'){fin(i.value.trim());m.close()}};setTimeout(()=>{i.focus();i.select()},30)})}
+function askConfirm(title,msg,yes){return new Promise(res=>{let done=false;const fin=v=>{if(!done){done=true;res(v)}};modal(title,h('p',{text:msg}),[{label:'Cancel',cls:'ghost'},{label:yes||'Confirm',cls:'primary',run:()=>{fin(true)}}],{onClose:()=>fin(false)})})}
+
+/* ================= settings ================= */
+const CFG_DEFAULT={key:'',model:'openai/gpt-6.1-sol',fast:'',temp:'',maxTok:'',custom:'',theme:'gold',accent:'',fixMax:2,bg:true,codeSize:12,auto:true};
+const cfg=Object.assign({},CFG_DEFAULT,store.get('antares-cfg',{}));
+function saveCfg(){store.set('antares-cfg',cfg)}
+(function migrate(){if(LS.getItem('antares-cfg'))return;const g=k=>LS.getItem(k);if(g('antares-key'))cfg.key=g('antares-key');if(g('antares-model'))cfg.model=g('antares-model');if(g('antares-temp'))cfg.temp=g('antares-temp');if(g('antares-maxtok'))cfg.maxTok=g('antares-maxtok');if(g('antares-custom'))cfg.custom=g('antares-custom');if(g('antares-auto')==='0')cfg.auto=false;saveCfg()})();
+function applyTheme(){const r=document.documentElement;r.dataset.theme=THEMES[cfg.theme]?cfg.theme:'gold';if(cfg.accent)r.style.setProperty('--accent',cfg.accent);else r.style.removeProperty('--accent');if(window.bgRefresh)bgRefresh();$('source').style.fontSize=cfg.codeSize+'px'}
+function refreshModel(){const ok=cfg.key&&cfg.model;$('badge').textContent=ok?'AI READY · OPENROUTER':'ADD OPENROUTER KEY';$('badge').classList.toggle('ok',!!ok);$('mlabel').textContent=cfg.model||'not set'}
+let allModels=[];
+function openSettings(){
+ const fld=(label,input,hint)=>h('div',{class:'fld'},h('label',{text:label}),input,hint?h('p',{class:'note',text:hint}):null);
+ const bind=(el,key)=>{el.value=cfg[key];el.oninput=()=>{cfg[key]=el.value.trim();saveCfg();refreshModel()};return el};
+ const dl=h('datalist',{id:'models-dl'});const fillDl=()=>{dl.replaceChildren();allModels.forEach(m=>dl.append(h('option',{value:m.id})))};fillDl();
+ const key=bind(h('input',{type:'password',placeholder:'sk-or-…',autocomplete:'off'}),'key');
+ const model=bind(h('input',{type:'text',list:'models-dl',placeholder:'e.g. provider/model-name'}),'model');
+ const fast=bind(h('input',{type:'text',list:'models-dl',placeholder:'optional, cheaper model for prompt enhancing'}),'fast');
+ const free=h('input',{type:'checkbox'}),load=h('button',{class:'sm',text:'Load model list',onclick:async()=>{say('Loading models…',true);try{const d=await(await fetch(API+'/models')).json();allModels=(d.data||[]).map(m=>({id:m.id,free:!!m.pricing&&Number(m.pricing.prompt)===0&&Number(m.pricing.completion)===0})).sort((a,b)=>a.id.localeCompare(b.id));const l=free.checked?allModels.filter(m=>m.free):allModels;dl.replaceChildren();l.forEach(m=>dl.append(h('option',{value:m.id})));say('✓ '+l.length+' models loaded. Start typing in the model box.')}catch(e){say('✗ Could not load models: '+e.message)}}});
+ const temp=bind(h('input',{type:'number',min:'0',max:'2',step:'0.1',placeholder:'default'}),'temp');
+ const maxTok=bind(h('input',{type:'number',min:'256',step:'256',placeholder:'default'}),'maxTok');
+ const custom=bind(h('textarea',{style:'min-height:80px',placeholder:'e.g. Always use a dark neon theme. Prefer vanilla JS.'}),'custom');
+ const theme=h('select',{onchange:()=>{cfg.theme=theme.value;saveCfg();applyTheme()}},Object.entries(THEMES).map(([k,v])=>h('option',{value:k,text:v})));theme.value=cfg.theme;
+ const acc=h('input',{type:'color',value:cfg.accent||'#a58bff',oninput:()=>{cfg.accent=acc.value;saveCfg();applyTheme()}});
+ const fixMax=h('select',{onchange:()=>{cfg.fixMax=+fixMax.value;saveCfg()}},[0,1,2,3].map(n=>h('option',{value:n,text:n?n+' attempt'+(n>1?'s':''):'Off'})));fixMax.value=String(cfg.fixMax);
+ const bg=h('input',{type:'checkbox',checked:cfg.bg,onchange:()=>{cfg.bg=bg.checked;saveCfg();bg.checked?startBg():stopBg()}});
+ const cs=h('input',{type:'number',min:'10',max:'20',value:cfg.codeSize,oninput:()=>{cfg.codeSize=Math.min(20,Math.max(10,+cs.value||12));saveCfg();applyTheme()}});
+ const test=h('button',{text:'Test key & credits',onclick:async()=>{if(!cfg.key)return say('Add your API key first.');try{const r=await fetch(API+'/auth/key',{headers:{authorization:'Bearer '+cfg.key}}),j=await r.json();if(!r.ok)throw new Error((j.error&&j.error.message)||'HTTP '+r.status);const d=j.data||{},used=Number(d.usage||0).toFixed(2),lim=d.limit==null?'no limit':'$'+Number(d.limit).toFixed(2);$('credit').textContent='Used $'+used+' · '+lim;$('credit').classList.remove('hidden');say('✓ Key works. Used $'+used+' · limit: '+lim)}catch(e){say('✗ Key check failed: '+e.message)}}});
+ const wipe=h('button',{class:'ghost',text:'Wipe all Antares data',onclick:async()=>{if(await askConfirm('Wipe everything?','This deletes every project, saved prompt and setting stored in this browser. Export first if you need a backup.','Wipe all')){await kv.del('projects');Object.keys(LS).filter(k=>k.startsWith('antares-')).forEach(k=>LS.removeItem(k));location.reload()}}});
+ const body=h('div',null,
+  h('p',{class:'note',text:'Create a key at openrouter.ai/keys. Everything is stored on this device only.'}),
+  fld('API key',h('div',{class:'row'},key,h('button',{class:'sm fit',text:'👁',onclick:()=>{key.type=key.type==='password'?'text':'password'}}))),
+  fld('Model ID',model),fld('Fast model (optional)',fast,'Used for the ✨ prompt enhancer to save cost.'),
+  h('div',{class:'row',style:'margin-top:8px'},load,h('label',{class:'cb'},free,' Free only')),dl,
+  h('div',{class:'two'},fld('Temperature',temp),fld('Max tokens',maxTok)),
+  fld('Custom instructions (always applied)',custom),
+  h('div',{class:'two'},fld('Theme',theme),fld('Accent colour',h('div',{class:'row'},acc,h('button',{class:'sm fit',text:'Reset',onclick:()=>{cfg.accent='';saveCfg();applyTheme();acc.value='#a58bff'}})))),
+  h('div',{class:'two'},fld('Auto-fix attempts',fixMax),fld('Code font size',cs)),
+  h('label',{class:'cb',style:'margin-top:14px!important'},bg,' Animated starfield background'),
+  h('div',{class:'two',style:'margin-top:16px'},test,wipe));
+ modal('Settings',body,[{label:'Done',cls:'primary'}],{onClose:refreshModel});
+}
+
+/* ================= storage (IndexedDB + fallback) ================= */
+const kv=(()=>{let dbp=null;const open=()=>dbp||(dbp=new Promise((res,rej)=>{try{const r=indexedDB.open('antares-db',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}}));
+ const tx=async(mode,fn)=>{const db=await open();return new Promise((res,rej)=>{const t=db.transaction('kv',mode),q=fn(t.objectStore('kv'));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)})};
+ return{async get(k){try{return await tx('readonly',s=>s.get(k))}catch{return undefined}},async set(k,v){try{await tx('readwrite',s=>s.put(v,k));return true}catch{return false}},async del(k){try{await tx('readwrite',s=>s.delete(k))}catch{}}}})();
+let projects=[],current=null,redo=[],saveTimer=0;
+const norm=p=>({id:p.id||uid(),name:String(p.name).slice(0,80),prompt:p.prompt||'',mode:p.mode||'',html:p.html,created:p.created||Date.now(),updated:p.updated||Date.now(),pinned:!!p.pinned,tags:Array.isArray(p.tags)?p.tags.slice(0,8).map(String):[],chat:Array.isArray(p.chat)?p.chat.slice(-60):[],versions:Array.isArray(p.versions)&&p.versions.length?p.versions.slice(-MAX_VERSIONS):[{t:p.updated||Date.now(),label:'Saved version',html:p.html}]});
+const validProj=p=>p&&typeof p.name==='string'&&typeof p.html==='string';
+async function loadProjects(){let a=await kv.get('projects');if(!Array.isArray(a))a=store.get('antares-projects',[]);return(Array.isArray(a)?a:[]).filter(validProj).map(norm).slice(0,MAX_PROJECTS)}
+function persist(){clearTimeout(saveTimer);saveTimer=setTimeout(flush,250)}
+async function flush(){clearTimeout(saveTimer);saveTimer=0;if(await kv.set('projects',projects)){try{LS.removeItem('antares-projects')}catch{}return true}
+ for(;;){try{LS.setItem('antares-projects',JSON.stringify(projects));return true}catch{const o=projects.find(p=>p!==current&&p.versions.length>1);if(o){o.versions=o.versions.slice(-1);continue}const old=[...projects].reverse().find(p=>!p.pinned&&p!==current);if(old){projects.splice(projects.indexOf(old),1);continue}toast('⚠ Storage is full. Export your projects.');return false}}}
+addEventListener('pagehide',()=>{if(saveTimer)flush()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&saveTimer)flush()});
+let stats=Object.assign({builds:0,refines:0,fixes:0,tin:0,tout:0,cost:0,chars:0},store.get('antares-stats',{}));
+let sessCost=0;
+function bumpStats(kind,usage,inChars,outChars){if(kind==='new')stats.builds++;else if(kind==='fix')stats.fixes++;else stats.refines++;const ti=usage&&usage.prompt_tokens||Math.round(inChars/4),to=usage&&usage.completion_tokens||Math.round(outChars/4),c=usage&&typeof usage.cost==='number'?usage.cost:0;stats.tin+=ti;stats.tout+=to;stats.cost+=c;stats.chars+=outChars;sessCost+=c;store.set('antares-stats',stats);if(sessCost>0){$('cost').textContent='Session $'+sessCost.toFixed(4);$('cost').classList.remove('hidden')}}
+
+/* ================= console + preview ================= */
+let conLog=[],errCount=0,conTimer=0,autoOK=false,lastErr='',tries=0,ctl=null,lastUsage=null;
+const HOOK='<script>["localStorage","sessionStorage"].forEach(function(n){try{window[n].getItem("x")}catch(e){var m={};Object.defineProperty(window,n,{value:{getItem:function(k){return k in m?m[k]:null},setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}},key:function(i){return Object.keys(m)[i]||null}}})}});onerror=function(m,s,l){parent.postMessage({antaresErr:m+" (line "+l+")"},"*")};addEventListener("unhandledrejection",function(e){parent.postMessage({antaresErr:String(e.reason)},"*")});["log","warn","error"].forEach(function(k){var o=console[k];console[k]=function(){try{parent.postMessage({antaresLog:k+": "+[].map.call(arguments,String).join(" ")},"*")}catch(e){}o.apply(console,arguments)}});<\/script>';
+function renderConsole(){const f=$('conFilter').value,box=$('console');box.replaceChildren();conLog.filter(e=>f==='all'||(f==='error'&&e.k==='error')||(f==='warn'&&e.k!=='log')).forEach(e=>box.append(h('div',{class:'cl '+e.k,text:e.msg})));box.scrollTop=1e9}
+function conAdd(k,msg){conLog.push({k:k,msg:String(msg).slice(0,500)});if(conLog.length>500)conLog.shift();if(k==='error')errCount++;$('consoleTab').textContent='Console'+(errCount?' ('+errCount+')':'');if(!conTimer&&!$('console').classList.contains('hidden'))conTimer=setTimeout(()=>{conTimer=0;renderConsole()},200)}
+function setPreview(html){conLog=[];errCount=0;$('consoleTab').textContent='Console';$('console').replaceChildren();$('err').classList.add('hidden');$('preview').srcdoc=/<head[^>]*>/i.test(html)?html.replace(/<head[^>]*>/i,m=>m+HOOK):HOOK+html}
+addEventListener('message',e=>{if(e.source!==$('preview').contentWindow||!e.data)return;
+ if(e.data.antaresLog){const s=String(e.data.antaresLog),m=/^(log|warn|error): /.exec(s);conAdd(m?m[1]:'log',m?s.slice(m[0].length):s)}
+ if(e.data.antaresErr){lastErr=String(e.data.antaresErr).slice(0,300);conAdd('error','✗ '+lastErr);$('errTxt').textContent='⚠ '+lastErr;$('err').classList.remove('hidden');
+  if($('auto').checked&&autoOK&&tries<cfg.fixMax&&!ctl){tries++;say('🛠 Auto-fixing (attempt '+tries+'/'+cfg.fixMax+')…');runFix()}}});
+const PANEL={preview:'preview',source:'codewrap',console:'console',versions:'versions',chat:'chat'};
+function tab(v){v=PANEL[v]?v:'preview';Object.keys(PANEL).forEach(k=>{$(PANEL[k]).classList.toggle('hidden',k!==v);$(k+'Tab').classList.toggle('active',k===v)});$('clearCons').classList.toggle('hidden',v!=='console');$('conFilter').classList.toggle('hidden',v!=='console');if(v==='console')renderConsole();if(v==='versions')renderVersions();if(v==='chat')renderChat()}
+function updateMeta(){const t=$('source').value;$('meta').textContent=t?kb(new Blob([t]).size)+' · '+t.split('\n').length+' lines'+(current?' · '+MODE_NAMES[current.mode||'']:''):''}
+function showHtml(t){$('source').value=t;setPreview(t);updateMeta();$('run').classList.remove('pulse')}
+$('source').addEventListener('input',()=>{updateMeta();$('run').classList.add('pulse')});
+const DEV={r:[0,0],p:[390,844],s:[360,640],t:[820,1180],l:[1280,800]};let landscape=false;
+function applyDevice(){const v=$('device').value,d=DEV[v],fr=$('preview');if(!d[0]){fr.style.maxWidth='';fr.style.height='';fr.style.minHeight='';fr.classList.remove('framed');return}let w=d[0],hh=d[1];if(landscape&&v!=='l')[w,hh]=[hh,w];fr.classList.add('framed');fr.style.maxWidth=w+'px';fr.style.minHeight='0';fr.style.height=Math.max(320,Math.min(hh,innerHeight-230))+'px'}
+
+/* ================= projects ================= */
+const MODE_NAMES={'':'App',game2d:'2D game',game3d:'3D game',dash:'Dashboard',site:'Website'};
+const WELCOME='<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 25% 15%,#2c2052,#0b0d19 70%);color:#f1efff;font:17px system-ui;text-align:center;padding:24px}.c{max-width:520px}h1{letter-spacing:-1.5px;font-size:38px;margin:0 0 12px;background:linear-gradient(120deg,#fff,#cdbfff,#f0cd7a);-webkit-background-clip:text;background-clip:text;color:transparent}p{color:#b8b3d0;line-height:1.6;margin:8px 0}.g{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}.g div{padding:14px;border:1px solid #3a3566;border-radius:14px;background:#14122a;font-size:14px;color:#d8d2f5}b{color:#f0cd7a}</style></head><body><div class="c"><h1>✦ Build something extraordinary</h1><p>Describe an app or game, press <b>Build</b>, and watch it appear here.</p><div class="g"><div>🎮 Games<br><small>2D &amp; 3D</small></div><div>📊 Dashboards<br><small>charts &amp; KPIs</small></div><div>🌐 Websites<br><small>luxury landing pages</small></div><div>🧰 Tools<br><small>save, export, install</small></div></div><p style="margin-top:22px;font-size:13px">Press <b>Ctrl+K</b> for the command palette.</p></div></body></html>';
+function openWelcome(){current=null;redo=[];$('projectTitle').textContent='Project preview';showHtml(WELCOME);tab('preview');$('qrBox').classList.add('hidden');renderProjects();renderChat()}
+function openProject(p,keepTab){current=p;redo=[];$('name').value=p.name;$('mode').value=p.mode||'';$('projectTitle').textContent=p.name;showHtml(p.html);if(!keepTab)tab('preview');$('qrBox').classList.remove('hidden');renderProjects();renderVersions();renderChat()}
+function commit(html,label){if(!current)return;const last=current.versions[current.versions.length-1];current.html=html;current.updated=Date.now();if(!last||last.html!==html){current.versions.push({t:Date.now(),label:label,html:html});while(current.versions.length>MAX_VERSIONS)current.versions.shift()}redo=[];persist();renderProjects();renderVersions()}
+function addProject(p){projects.unshift(p);while(projects.length>MAX_PROJECTS){const i=projects.map((x,k)=>x.pinned||x===p?-1:k).filter(k=>k>=0).pop();if(i==null)break;projects.splice(i,1)}persist()}
+function removeProject(p){const i=projects.indexOf(p);if(i<0)return;const was=current===p;projects.splice(i,1);persist();if(was)openWelcome();else renderProjects();toast('Deleted “'+p.name+'”',{label:'Undo',ms:8000,action:()=>{projects.splice(Math.min(i,projects.length),0,p);persist();openProject(p)}})}
+function duplicate(p){const c=JSON.parse(JSON.stringify(p));c.id=uid();c.name=(p.name+' copy').slice(0,80);c.created=c.updated=Date.now();c.pinned=false;addProject(c);openProject(c);toast('Duplicated.')}
+async function renameProject(p){const v=await askText('Rename project',p.name);if(v){p.name=v.slice(0,80);p.updated=Date.now();if(p===current){$('projectTitle').textContent=p.name;$('name').value=p.name}persist();renderProjects()}}
+async function tagProject(p){const v=await askText('Tags (comma separated)',p.tags.join(', '),'game, client, prototype');if(v!=null){p.tags=v.split(',').map(s=>s.trim().replace(/^#/,'')).filter(Boolean).slice(0,8);persist();renderProjects()}}
+function renderProjects(){
+ const q=$('psearch').value.trim().toLowerCase(),sort=$('psort').value,box=$('plist'),tsel=$('ptag'),tagNow=tsel.value;
+ const tags=[...new Set(projects.flatMap(p=>p.tags))].sort();tsel.replaceChildren(h('option',{value:'',text:'All tags'}),tags.map(t=>h('option',{value:t,text:'#'+t})));tsel.value=tags.includes(tagNow)?tagNow:'';
+ box.replaceChildren();$('pcount').textContent='('+projects.length+')';
+ const cmp={recent:(a,b)=>b.updated-a.updated,oldest:(a,b)=>a.created-b.created,name:(a,b)=>a.name.localeCompare(b.name),size:(a,b)=>b.html.length-a.html.length}[sort];
+ const list=projects.filter(p=>(!q||(p.name+' '+p.prompt+' '+p.tags.join(' ')).toLowerCase().includes(q))&&(!tsel.value||p.tags.includes(tsel.value))).sort((a,b)=>(b.pinned-a.pinned)||cmp(a,b));
+ if(!list.length){box.append(h('div',{class:'empty',text:projects.length?'No projects match.':'No projects yet. Your builds will appear here.'}));return}
+ list.forEach(p=>{
+  const btn=(txt,title,cls,fn)=>h('button',{class:cls||'',title:title,text:txt,onclick:e=>{e.stopPropagation();fn()}});
+  box.append(h('div',{class:'proj'+(p===current?' on':''),onclick:()=>openProject(p)},
+   btn(p.pinned?'★':'☆',p.pinned?'Unpin':'Pin to top','pin'+(p.pinned?' on':''),()=>{p.pinned=!p.pinned;persist();renderProjects()}),
+   h('div',{class:'i'},h('b',{text:p.name}),h('small',{text:MODE_NAMES[p.mode||'']+' · '+kb(new Blob([p.html]).size)+' · '+p.versions.length+' v · '+ago(p.updated)}),p.tags.length?h('div',null,p.tags.map(t=>h('span',{class:'tag',text:'#'+t}))):null),
+   btn('✎','Rename','',()=>renameProject(p)),btn('🏷','Edit tags','',()=>tagProject(p)),btn('⧉','Duplicate','',()=>duplicate(p)),btn('✕','Delete project','del',()=>removeProject(p))))});
+}
+['psearch','psort','ptag'].forEach(id=>$(id).addEventListener('input',renderProjects));
+$('newProj').onclick=()=>{openWelcome();$('name').value='My Antares App';$('prompt').value='';$('mode').value='';pcount();view('create');$('prompt').focus()};
+$('name').onchange=()=>{const v=$('name').value.trim();if(current&&v){current.name=v.slice(0,80);current.updated=Date.now();$('projectTitle').textContent=current.name;persist();renderProjects()}};
+let clearArmed=0;
+$('clearAll').onclick=()=>{const n=projects.filter(p=>!p.pinned).length;if(!n)return toast('Nothing to clear (pinned projects are kept).');if(!clearArmed){clearArmed=setTimeout(()=>{clearArmed=0;$('clearAll').textContent='🗑 Clear unpinned'},4000);$('clearAll').textContent='Tap again to delete '+n;return}
+ clearTimeout(clearArmed);clearArmed=0;$('clearAll').textContent='🗑 Clear unpinned';const snap=projects.slice(),hadCur=current&&!current.pinned,cur=current;projects=projects.filter(p=>p.pinned);persist();if(hadCur)openWelcome();else renderProjects();
+ toast('Deleted '+n+' project'+(n>1?'s':''),{label:'Undo',ms:9000,action:()=>{projects=snap;persist();renderProjects();if(hadCur)openProject(cur)}})};
+$('exportAll').onclick=()=>{if(!projects.length)return toast('No projects to export.');saveFile('antares-projects-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({app:'antares',version:3,projects:projects},null,1),'application/json');toast('Exported '+projects.length+' projects.')};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=()=>{const f=$('importFile').files;importFiles(f);$('importFile').value=''};
+async function importFiles(files){let n=0;for(const f of files){try{const txt=await f.text(),nm=f.name.toLowerCase();
+  if(nm.endsWith('.json')){const d=JSON.parse(txt),arr=Array.isArray(d)?d:d.projects;if(!Array.isArray(arr))throw new Error('Not an Antares export');const have=new Set(projects.map(p=>p.id));arr.forEach(p=>{if(!validProj(p))return;const c=norm(p);if(have.has(c.id))c.id=uid();have.add(c.id);projects.push(c);n++})}
+  else if(/\.html?$/.test(nm)){const t=(/<title[^>]*>([^<]*)<\/title>/i.exec(txt)||[])[1];const p=norm({name:(t&&t.trim())||f.name.replace(/\.html?$/i,''),html:txt,prompt:'Imported from '+f.name});p.versions=[{t:Date.now(),label:'Imported',html:txt}];addProject(p);n++}
+ }catch(e){toast('✗ '+f.name+': '+e.message)}}
+ if(n){projects=projects.slice(0,MAX_PROJECTS*2);persist();renderProjects();toast('Imported '+n+' project'+(n===1?'':'s')+'.')}}
+addEventListener('dragover',e=>{if(e.dataTransfer&&[...e.dataTransfer.types].includes('Files'))e.preventDefault()});
+addEventListener('drop',e=>{if(e.dataTransfer&&e.dataTransfer.files.length){e.preventDefault();importFiles(e.dataTransfer.files)}});
+
+/* ================= history, diff ================= */
+function lineDiff(a,b){const A=a.split('\n'),B=b.split('\n');let s=0;while(s<A.length&&s<B.length&&A[s]===B[s])s++;let ea=A.length,eb=B.length;while(ea>s&&eb>s&&A[ea-1]===B[eb-1]){ea--;eb--}
+ const ma=A.slice(s,ea),mb=B.slice(s,eb),out=[];for(let i=0;i<s;i++)out.push(['=',A[i]]);
+ const n=ma.length,m=mb.length;
+ if(!n||!m||n*m>6e6){ma.forEach(x=>out.push(['-',x]));mb.forEach(x=>out.push(['+',x]))}
+ else{const w=m+1,dp=new Uint16Array((n+1)*w);for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i*w+j]=ma[i]===mb[j]?dp[(i+1)*w+j+1]+1:Math.max(dp[(i+1)*w+j],dp[i*w+j+1]);
+  let i=0,j=0;while(i<n&&j<m){if(ma[i]===mb[j]){out.push(['=',ma[i]]);i++;j++}else if(dp[(i+1)*w+j]>=dp[i*w+j+1]){out.push(['-',ma[i++]])}else out.push(['+',mb[j++]])}
+  while(i<n)out.push(['-',ma[i++]]);while(j<m)out.push(['+',mb[j++]])}
+ for(let i=ea;i<A.length;i++)out.push(['=',A[i]]);return out}
+function showDiff(oldH,newH,title){const ops=lineDiff(oldH,newH),add=ops.filter(o=>o[0]==='+').length,del=ops.filter(o=>o[0]==='-').length,box=h('div',{class:'diff'});let shown=0,i=0;
+ while(i<ops.length&&shown<3000){const o=ops[i];if(o[0]==='='){let j=i;while(j<ops.length&&ops[j][0]==='=')j++;const run=j-i;if(run>8){for(let k=i;k<i+3;k++)box.append(h('div',{text:'  '+ops[k][1]}));box.append(h('div',{class:'gap',text:'… '+(run-6)+' unchanged lines …'}));for(let k=j-3;k<j;k++)box.append(h('div',{text:'  '+ops[k][1]}));shown+=7}else{for(let k=i;k<j;k++)box.append(h('div',{text:'  '+ops[k][1]}));shown+=run}i=j}else{box.append(h('div',{class:o[0]==='+'?'add':'del',text:o[0]+' '+o[1]}));shown++;i++}}
+ if(i<ops.length)box.append(h('div',{class:'gap',text:'Diff truncated for display.'}));
+ modal(title,h('div',null,h('p',{text:'+'+add+' added · −'+del+' removed'}),box),[{label:'Close',cls:'primary'}],{wide:true})}
+function renderVersions(){const box=$('versions');box.replaceChildren();
+ if(!current){box.append(h('div',{class:'empty',text:'Open or build a project to see its version history.'}));return}
+ if(current.prompt)box.append(h('div',{class:'box'},'Original prompt',h('q',{text:current.prompt}),h('button',{class:'sm',text:'Load into prompt box',onclick:()=>{$('prompt').value=current.prompt;pcount();view('create');toast('Prompt loaded.')}})));
+ const cur=current.versions[current.versions.length-1];
+ [...current.versions].reverse().forEach((v,i)=>{const isCur=i===0;
+  box.append(h('div',{class:'ver'+(isCur?' cur':'')},h('div',{class:'i'},h('b',{text:(isCur?'● Current — ':'')+v.label}),h('small',{text:ago(v.t)+' · '+kb(new Blob([v.html]).size)})),
+   isCur?null:h('button',{class:'sm',text:'Restore',onclick:()=>{showHtml(v.html);commit(v.html,'Restored: '+v.label.slice(0,36));toast('Version restored.');tab('preview')}}),
+   isCur?null:h('button',{class:'sm',text:'Diff',title:'Compare with current',onclick:()=>showDiff(v.html,cur.html,'“'+v.label.slice(0,40)+'” → current')}),
+   h('button',{class:'sm',text:'↗',title:'Open in new tab',onclick:()=>openTab(v.html)}),
+   h('button',{class:'sm',text:'⬇',title:'Download this version',onclick:()=>saveFile(safeName(current.name)+'-'+new Date(v.t).toISOString().slice(0,16).replace(/[:T]/g,'')+'.html',v.html)})))})}
+function addChat(p,entries){p.chat=(p.chat||[]).concat(entries).slice(-60)}
+function renderChat(){const box=$('chatlog');box.replaceChildren();
+ if(!current||!current.chat.length){box.append(h('div',{class:'empty',text:current?'No conversation yet. Ask for a change below, or use a quick improvement.':'Build or open a project to start a conversation.'}));return}
+ current.chat.forEach(m=>box.append(h('div',{class:'msg '+(m.r==='user'?'u':'a')},h('small',{text:(m.r==='user'?'You':'Antares')+' · '+ago(m.t)+(m.k&&m.k!=='new'?' · '+m.k:'')}),m.text)));box.scrollTop=1e9}
+
+/* ================= AI core ================= */
+const POWER={sound:['🔊 Sound','WebAudio sound effects with a mute toggle'],touch:['📱 Touch','on-screen touch controls and swipe gestures'],theme:['🌗 Theme','a dark/light theme toggle saved to localStorage'],tutorial:['🧭 Tutorial','a short first-run tutorial overlay'],scores:['🏆 Stats','a local leaderboard and persistent statistics'],a11y:['♿ A11y','full keyboard accessibility and ARIA labels'],i18n:['🌐 EN/HI','an English and Hindi language toggle'],pwa:['📲 Offline','offline-friendly design with manifest-ready metadata']};
+const powers=new Set(store.get('antares-powers',[]).filter(k=>POWER[k]));
 const SYSTEM="You are Antares, a world-class senior app and game engineer. Deliver EXACTLY what the user asked: implement every feature, rule, control and visual detail they requested; where unspecified, choose the best professional option. "+
 "Output ONE complete self-contained HTML file (inline CSS+JS; CDN libs allowed: Three.js, Phaser, Chart.js, Tone.js, Matter.js). "+
-"Quality bar: premium modern UI, smooth animation, responsive, touch and keyboard controls, game juice (particles, shake, sound, score, levels, game over, restart), clean code, localStorage saves, no placeholders or fake features, no external images (use CSS/SVG/canvas). The code must run with zero errors on first load. "+
+"Quality bar: premium luxurious modern UI, smooth animation, responsive, touch and keyboard controls, accessible markup, game juice (particles, shake, sound, score, levels, game over, restart, pause when tab hidden), clean code, localStorage saves wrapped in try/catch, no placeholders or fake features, no external images (use CSS/SVG/canvas). The code must run with zero errors on first load and must always end with a closing </html>. "+
 "Format: first line APP_NAME: <short name>; then a short bullet checklist of what you built; then ONE "+F+"html block with the full code; then 1-2 lines of tips.";
 const MODES={game2d:' Build a 2D game on HTML5 canvas: fixed-timestep loop, polished visuals drawn in code, particles, parallax, levels with rising difficulty, pause/restart, saved high score, WebAudio sound effects, on-screen touch controls.',game3d:' Build a 3D game with Three.js from cdnjs (pinned version): lighting, shadows, fog, smooth camera, collisions, HUD, touch controls, pause/restart.',dash:' Build a data dashboard with Chart.js from cdnjs: KPI cards, several charts, filters, sample data, theme toggle, CSV export.',site:' Build a polished responsive website: hero, sections, animations, pricing, FAQ, accessible markup, working form UI.'};
-let tries=0,ctl=null;
-let current=null,projects=[],versions=[],lastErr='';
-try{const s=JSON.parse(LS.getItem('antares-projects')||'[]');if(Array.isArray(s))projects=s.filter(p=>p&&typeof p.name==='string'&&typeof p.html==='string').slice(0,8)}catch{}
-$('orKey').value=LS.getItem('antares-key')||'';$('orModel').value=LS.getItem('antares-model')||'openai/gpt-6.1-sol';
-function badge(){const ok=$('orKey').value.trim()&&$('orModel').value.trim();$('badge').textContent=ok?'AI READY · OPENROUTER':'ADD OPENROUTER KEY';$('badge').classList.toggle('ok',!!ok)}
-$('orKey').oninput=()=>{LS.setItem('antares-key',$('orKey').value.trim());badge()};
-$('orModel').oninput=()=>{LS.setItem('antares-model',$('orModel').value.trim());badge()};
-const HOOK='<script>["localStorage","sessionStorage"].forEach(function(n){try{window[n].getItem("x")}catch(e){var m={};Object.defineProperty(window,n,{value:{getItem:function(k){return k in m?m[k]:null},setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}},key:function(i){return Object.keys(m)[i]||null}}})}});onerror=function(m,s,l){parent.postMessage({antaresErr:m+" (line "+l+")"},"*")};addEventListener("unhandledrejection",function(e){parent.postMessage({antaresErr:String(e.reason)},"*")});["log","warn","error"].forEach(function(k){var o=console[k];console[k]=function(){try{parent.postMessage({antaresLog:k+": "+[].map.call(arguments,String).join(" ")},"*")}catch(e){}o.apply(console,arguments)}});<\/script>';
-function setPreview(h){$('console').textContent='';$('err').classList.add('hidden');$('preview').srcdoc=/<head[^>]*>/i.test(h)?h.replace(/<head[^>]*>/i,m=>m+HOOK):HOOK+h}
-addEventListener('message',e=>{if(e.source!==$('preview').contentWindow||!e.data)return;
-if(e.data.antaresLog){const c=$('console');c.textContent+=e.data.antaresLog.slice(0,500)+'\n';c.scrollTop=1e9}
-if(e.data.antaresErr){lastErr=String(e.data.antaresErr).slice(0,300);$('console').textContent+='✗ '+lastErr+'\n';$('errTxt').textContent='⚠ '+lastErr;$('err').classList.remove('hidden');if($('auto').checked&&tries<2&&!ctl){tries++;say('🛠 Auto-fixing (attempt '+tries+'/2)…');$('fix').click()}}});
-function tab(v){v=v===true?'source':v||'preview';['preview','source','console'].forEach(k=>$(k).classList.toggle('hidden',k!==v));['preview','source','console'].forEach(k=>$(k+'Tab').classList.toggle('active',k===v))}
-function openProject(p){current={...p};$('name').value=p.name;$('prompt').value=p.prompt||'';$('projectTitle').textContent=p.name;$('source').value=p.html;setPreview(p.html);tab(false)}
-function renderHistory(){$('history').replaceChildren();projects.forEach(p=>{const b=document.createElement('button');b.textContent=p.name;b.onclick=()=>{openProject(p);versions=[p.html]};$('history').append(b)})}
-async function aiRun(refine){
-  const prompt=$('prompt').value.trim(),key=$('orKey').value.trim(),model=$('orModel').value.trim();
-  if(!prompt)return say('Describe what to build first.');
-  if(!key||!model){$('settings').open=true;return say('Add your OpenRouter key and model ID first.')}
-  if(refine&&!current)return say('Build something first, then refine it.');
-  const msg=refine?'Current app source:\n'+F+'html\n'+$('source').value+'\n'+F+'\nApply this change, keep everything that works, and return the FULL updated file: '+prompt:prompt;
-  const btns=[$('refine'),$('fix')],prev=$('source').value;btns.forEach(b=>b.disabled=true);$('generate').textContent='■ Stop';tab('source');
-  say('✦ Building with AI… large apps can take a minute or two.');
-  try{
-    ctl=new AbortController();
-    const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',signal:ctl.signal,headers:{'content-type':'application/json',authorization:'Bearer '+key,'X-Title':'Antares'},body:JSON.stringify({model,stream:true,messages:[{role:'system',content:SYSTEM+(MODES[$('mode').value]||'')},{role:'user',content:msg}]})});
-    if(!res.ok){let m='HTTP '+res.status;try{const e=await res.json();m=(e.error&&e.error.message)||m}catch{}throw new Error(m)}
-    const rd=res.body.getReader(),dec=new TextDecoder();let buf='',out='';
-    for(;;){const {done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});const ls=buf.split('\n');buf=ls.pop();
-      for(const l of ls){if(!l.startsWith('data: ')||l.includes('[DONE]'))continue;try{const j=JSON.parse(l.slice(6));if(j.error)throw new Error(j.error.message||'Stream error');const dl=j.choices&&j.choices[0]&&j.choices[0].delta,t=dl&&dl.content;if(t)out+=t;else if(dl&&dl.reasoning&&!out)say('✦ Thinking…')}catch(e){if(!(e instanceof SyntaxError))throw e}}
-      $('source').value=out;$('source').scrollTop=1e9;if(out)say('✦ Writing code… '+out.length+' characters');}
-    const a=out.indexOf(F+'html'),b=out.lastIndexOf(F);
-    const html=a>=0?out.slice(a+7,b>a?b:undefined).trim():(/<html|<!doctype/i.test(out)?out.trim():'');
-    if(!html)throw new Error('No code returned. Try again or pick another model.');
-    const nm=refine?current.name:((out.match(/APP_NAME:\s*(.+)/)||[])[1]||$('name').value.trim()||'Untitled project').trim();
-    const p={name:nm,prompt:refine?'':prompt,html};openProject(p);versions=refine?[...versions,html]:[html];
-    projects=[p,...projects.filter(x=>x.name!==nm)].slice(0,8);
-    try{LS.setItem('antares-projects',JSON.stringify(projects))}catch{}
-    renderHistory();say('✓ '+nm+' is ready. Test it, then refine or fix.');
-  }catch(e){$('source').value=prev;say(e.name==='AbortError'?'■ Stopped.':'✗ '+e.message)}
-  btns.forEach(b=>b.disabled=false);$('generate').textContent='✦ Build with AI';ctl=null;tab(false);
-}
-$('generate').onclick=()=>ctl?ctl.abort():(tries=0,aiRun(false));
-$('refine').onclick=()=>{tries=0;aiRun(true)};
-$('fix').onclick=()=>{$('prompt').value='The app throws this error: '+lastErr+'. Find the root cause and fix it.';aiRun(true)};
-$('run').onclick=()=>{const h=$('source').value;if(current)current.html=h;versions.push(h);setPreview(h);tab(false);say('Running edited source.')};
-$('undo').onclick=()=>{if(versions.length>1){versions.pop();const h=versions[versions.length-1];$('source').value=h;if(current)current.html=h;setPreview(h);say('↩ Restored previous version.')}};
-$('copy').onclick=async()=>{const h=$('source').value;if(!h)return;try{await navigator.clipboard.writeText(h)}catch{const t=document.createElement('textarea');t.value=h;document.body.append(t);t.select();document.execCommand('copy');t.remove()}say('📋 Code copied.')};
-$('full').onclick=()=>{tab(false);document.body.classList.add('fs')};$('exitfs').onclick=()=>document.body.classList.remove('fs');
-$('download').onclick=()=>{const h=$('source').value;if(!h)return;const n=($('name').value.replace(/[^a-z0-9_-]/gi,'-')||'antares-app')+'.html';if(window.AndroidBridge){AndroidBridge.save(n,h);return}const u=URL.createObjectURL(new Blob([h],{type:'text/html;charset=utf-8'})),l=document.createElement('a');l.href=u;l.download=n;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
-$('consoleTab').onclick=()=>tab('console');$('device').onchange=()=>{$('preview').style.maxWidth=$('device').value};
-$('sourceTab').onclick=()=>tab(true);$('previewTab').onclick=()=>tab(false);
-document.querySelectorAll('[data-prompt]').forEach(b=>b.onclick=()=>{$('prompt').value=b.dataset.prompt});
-let allModels=[];
-function fillModels(){const f=$('freeOnly').checked,l=allModels.filter(m=>!f||m.free);$('modelPick').innerHTML='<option value="">Choose a model ('+l.length+')</option>'+l.map(m=>'<option value="'+m.id+'">'+m.id+(m.free?' (free)':'')+'</option>').join('');$('models').innerHTML=l.map(m=>'<option value="'+m.id+'">').join('')}
-$('loadModels').onclick=async()=>{say('Loading models…');try{const d=await(await fetch('https://openrouter.ai/api/v1/models')).json();allModels=(d.data||[]).map(m=>({id:m.id,free:!!m.pricing&&Number(m.pricing.prompt)===0&&Number(m.pricing.completion)===0})).sort((a,b)=>a.id.localeCompare(b.id));fillModels();$('modelPick').classList.remove('hidden');say('✓ '+allModels.length+' models loaded. Pick one from the list.')}catch(e){say('✗ Could not load models: '+e.message)}};
-$('freeOnly').onchange=fillModels;
-$('modelPick').onchange=()=>{const v=$('modelPick').value;if(v){$('orModel').value=v;LS.setItem('antares-model',v);badge()}};
-badge();renderHistory();
-openProject({name:'Welcome to Antares',prompt:'',html:'<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#101222;color:#f0edff;font:18px system-ui;text-align:center;padding:24px}h1{letter-spacing:-1px}p{color:#b6b1cc}</style></head><body><div><h1>✦ Build something extraordinary</h1><p>Add your OpenRouter key, describe an app or game, and tap Build.</p></div></body></html>'});
+const QUICK=[['🎨 Prettier UI','Redesign the UI to look far more premium: refined typography, spacing, gradients, depth and smooth micro-animations, without breaking any functionality.'],['🔊 Add sound','Add tasteful WebAudio sound effects for key actions with a mute toggle saved in localStorage.'],['📱 Mobile polish','Polish the experience on phones: bigger touch targets, safe-area padding, responsive layout, and no accidental page scrolling.'],['⚡ Optimize','Optimize performance and memory use, remove wasteful work, and keep animations smooth at 60fps.'],['🐞 Hunt bugs','Carefully review the whole code for bugs, edge cases and runtime errors and fix them all.'],['🧭 Tutorial','Add a short first-run tutorial/onboarding overlay that can be replayed from a help button.'],['🌗 Theme toggle','Add a dark/light theme toggle that is saved in localStorage.'],['🏆 Stats','Add a statistics and achievements panel with persistent progress.']];
+function extras(){const parts=[],st=$('style').value;if(st)parts.push('Visual style: '+st+'.');if(powers.size)parts.push('Must also include: '+[...powers].map(k=>POWER[k][1]).join('; ')+'.');return parts.length?'\n\n'+parts.join(' '):''}
+function setBusy(b){[$('refine'),$('fix'),$('enhance'),$('chatSend')].forEach(x=>x.disabled=b);document.querySelectorAll('#qr button,#qr2 button').forEach(x=>x.disabled=b);$('generate').textContent=b?'■ Stop':'✦ Build with AI';$('prog').classList.toggle('hidden',!b)}
+async function streamChat(model,messages,onText,onNote){
+ const body={model:model,stream:true,messages:messages,usage:{include:true}};
+ const t=parseFloat(cfg.temp);if(!isNaN(t))body.temperature=Math.min(2,Math.max(0,t));
+ const mt=parseInt(cfg.maxTok,10);if(mt>0)body.max_tokens=mt;
+ ctl=new AbortController();lastUsage=null;
+ const res=await fetch(API+'/chat/completions',{method:'POST',signal:ctl.signal,headers:{'content-type':'application/json',authorization:'Bearer '+cfg.key,'X-Title':'Antares'},body:JSON.stringify(body)});
+ if(!res.ok){let m='HTTP '+res.status;try{const e=await res.json();m=(e.error&&e.error.message)||m}catch{}throw new Error(m)}
+ const rd=res.body.getReader(),dec=new TextDecoder();let buf='',out='';
+ for(;;){const {done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});const ls=buf.split('\n');buf=ls.pop();
+  for(const l of ls){if(!l.startsWith('data: ')||l.includes('[DONE]'))continue;try{const j=JSON.parse(l.slice(6));if(j.error)throw new Error(j.error.message||'Stream error');if(j.usage)lastUsage=j.usage;const dl=j.choices&&j.choices[0]&&j.choices[0].delta,tx=dl&&dl.content;if(tx)out+=tx;else if(dl&&dl.reasoning&&!out&&onNote)onNote()}catch(e){if(!(e instanceof SyntaxError))throw e}}
+  onText(out)}
+ return out}
+function needKey(){if(!cfg.key||!cfg.model){say('Add your OpenRouter key and model ID first.',true);openSettings();return true}return false}
+function pushRecent(text,mode){const l=[{t:Date.now(),text:text,mode:mode},...store.get('antares-recent-prompts',[]).filter(x=>x.text!==text)].slice(0,20);store.set('antares-recent-prompts',l)}
+async function aiRun(kind,text){
+ const prompt=(text!==undefined?text:$('prompt').value).trim();
+ if(!prompt)return say('Describe what to build first.');
+ if(needKey())return;
+ const refine=kind!=='new';
+ if(refine&&!current)return say('Build something first, then refine it.');
+ const prev=$('source').value,t0=Date.now();
+ const msg=refine?'Current app source:\n'+F+'html\n'+prev+'\n'+F+'\nApply this change, keep everything that works, and return the FULL updated file: '+prompt:prompt+extras();
+ const sys=SYSTEM+(MODES[$('mode').value]||'')+(cfg.custom?' Additional user instructions: '+cfg.custom:'');
+ setBusy(true);tab('source');say('✦ Building with AI… large apps can take a minute or two.',true);
+ try{
+  const out=await streamChat(cfg.model,[{role:'system',content:sys},{role:'user',content:msg}],o=>{$('source').value=o;$('source').scrollTop=1e9;if(o){const s=Math.max(1,(Date.now()-t0)/1000);say('✦ Writing code… '+o.length.toLocaleString()+' chars · ~'+fmtN(o.length/4)+' tokens · '+Math.round(s)+'s · '+Math.round(o.length/s)+' chars/s',true)}},()=>say('✦ Thinking… '+Math.round((Date.now()-t0)/1000)+'s',true));
+  const a=out.indexOf(F+'html'),b=out.lastIndexOf(F);
+  const html=a>=0?out.slice(a+7,b>a+7?b:undefined).trim():(/<html|<!doctype/i.test(out)?out.trim():'');
+  if(!html)throw new Error('No code returned. Try again or pick another model.');
+  let notes='';if(a>=0)notes=(out.slice(0,a)+(b>a+7?out.slice(b+3):'')).replace(/APP_NAME:\s*.+\n?/,'').trim().slice(0,1500);
+  const chat=[{r:'user',text:prompt,t:Date.now(),k:kind}];if(notes)chat.push({r:'ai',text:notes,t:Date.now(),k:kind});
+  bumpStats(kind,lastUsage,msg.length+sys.length,out.length);autoOK=true;
+  if(refine){addChat(current,chat);commit(html,kind==='fix'?'Fix: '+lastErr.slice(0,40):prompt.slice(0,48));openProject(current);say('✓ '+current.name+' updated.')}
+  else{const nm=((out.match(/APP_NAME:\s*(.+)/)||[])[1]||$('name').value.trim()||'Untitled project').replace(/[*_#`]/g,'').trim().slice(0,60);
+   const p=norm({name:nm,prompt:prompt,mode:$('mode').value,html:html});p.chat=chat;p.versions=[{t:Date.now(),label:'Initial build',html:html}];pushRecent(prompt,p.mode);addProject(p);openProject(p);say('✓ '+nm+' is ready. Test it, then refine or fix.')}
+  if(!/<\/html>\s*$/i.test(html))toast('⚠ The output looks cut off. Use Refine with “continue and finish the file”, or raise Max tokens.',{ms:9000});
+  $('run').classList.remove('pulse');
+ }catch(e){$('source').value=prev;tab(current?'preview':'preview');say(e.name==='AbortError'?'■ Stopped.':'✗ '+e.message)}
+ ctl=null;setBusy(false)}
+function runFix(){aiRun('fix','The app throws this error: '+lastErr+'. Find the root cause and fix it.')}
+function quick(text){if(!current)return toast('Open or build a project first.');tries=0;aiRun('refine',text)}
+$('generate').onclick=()=>ctl?ctl.abort():(tries=0,aiRun('new'));
+$('refine').onclick=()=>{tries=0;aiRun('refine')};
+$('fix').onclick=()=>{tries=0;runFix()};
+$('enhance').onclick=async()=>{
+ const orig=$('prompt').value.trim();if(!orig)return say('Type a rough idea first, then enhance it.');if(needKey())return;
+ setBusy(true);$('prompt').value='';const mode=MODE_NAMES[$('mode').value].toLowerCase();say('✨ Enhancing your prompt…',true);
+ try{const out=await streamChat(cfg.fast||cfg.model,[{role:'system',content:"You are a senior product designer. Rewrite the user's rough idea into a precise, vivid build specification for a single-file HTML "+mode+". Cover: core features, controls (keyboard and touch), game rules or data model, screens, visual style, animations, sound, persistence. Keep it under 220 words, plain text, no markdown, no preamble."},{role:'user',content:orig}],o=>{$('prompt').value=o;pcount()});
+  if(!out.trim())throw new Error('Empty response');bumpStats('refine',lastUsage,orig.length+400,out.length);stats.refines--;store.set('antares-stats',stats);
+  say('✨ Prompt enhanced.',true);toast('Prompt enhanced.',{label:'Undo',action:()=>{$('prompt').value=orig;pcount()}})
+ }catch(e){$('prompt').value=orig;pcount();say(e.name==='AbortError'?'■ Stopped.':'✗ '+e.message)}
+ ctl=null;setBusy(false)};
+$('chatSend').onclick=()=>{const t=$('chatIn').value.trim();if(!t)return;if(!current)return toast('Open or build a project first.');$('chatIn').value='';tries=0;aiRun('refine',t)};
+$('chatIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('chatSend').click()}});
+
+/* ================= export ================= */
+let CRC=null;function crc32(b){if(!CRC){CRC=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;CRC[n]=c>>>0}}let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+function makeZip(files){const parts=[],cen=[];let off=0;const d=new Date(),dt=((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xFFFF,dd=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xFFFF;
+ files.forEach(f=>{const nb=strBytes(f.name),data=typeof f.data==='string'?strBytes(f.data):f.data,crc=crc32(data);
+  const lh=new DataView(new ArrayBuffer(30));lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(8,0,true);lh.setUint16(10,dt,true);lh.setUint16(12,dd,true);lh.setUint32(14,crc,true);lh.setUint32(18,data.length,true);lh.setUint32(22,data.length,true);lh.setUint16(26,nb.length,true);lh.setUint16(28,0,true);
+  parts.push(new Uint8Array(lh.buffer),nb,data);
+  const ch=new DataView(new ArrayBuffer(46));ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint16(10,0,true);ch.setUint16(12,dt,true);ch.setUint16(14,dd,true);ch.setUint32(16,crc,true);ch.setUint32(20,data.length,true);ch.setUint32(24,data.length,true);ch.setUint16(28,nb.length,true);ch.setUint32(42,off,true);
+  cen.push(new Uint8Array(ch.buffer),nb);off+=30+nb.length+data.length});
+ let cs=0;cen.forEach(c=>cs+=c.length);
+ const e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+ return new Blob([...parts,...cen,new Uint8Array(e.buffer)],{type:'application/zip'})}
+function saveFile(name,text,type){if(window.AndroidBridge){AndroidBridge.save(name,text);return}saveBlob(name,new Blob([text],{type:type||'text/html;charset=utf-8'}))}
+function saveBlob(name,blob){const u=URL.createObjectURL(blob),l=document.createElement('a');l.href=u;l.download=name;document.body.append(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}
+function openTab(t){const u=URL.createObjectURL(new Blob([t],{type:'text/html;charset=utf-8'}));if(!window.open(u,'_blank'))toast('Pop-up blocked. Allow pop-ups to open in a new tab.');setTimeout(()=>URL.revokeObjectURL(u),60000)}
+const curName=()=>safeName($('name').value||(current&&current.name)||'antares-app');
+function needSource(){if(!$('source').value.trim()||!current&&$('source').value===WELCOME){toast('Build or open a project first.');return false}return true}
+function exportHtml(){if(!needSource())return;saveFile(curName()+'.html',$('source').value)}
+function exportZip(){if(!needSource())return;if(window.AndroidBridge)return toast('ZIP export needs a regular browser. Use Download for HTML.');const n=curName(),files=[{name:n+'/index.html',data:$('source').value},{name:n+'/project.json',data:JSON.stringify({name:current?current.name:n,prompt:current?current.prompt:'',mode:current?current.mode:'',exported:new Date().toISOString(),generator:'Antares'},null,1)}];saveBlob(n+'.zip',makeZip(files));toast('ZIP exported.')}
+function exportPwa(){if(!needSource())return;if(window.AndroidBridge)return toast('PWA export needs a regular browser.');const n=curName(),nm=(current?current.name:n),letter=(nm.trim()[0]||'A').toUpperCase().replace(/[<>&]/g,'A');let html=$('source').value;
+ const head='<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0b0d17"><link rel="icon" href="icon.svg">';
+ html=/<head[^>]*>/i.test(html)?html.replace(/<head[^>]*>/i,m=>m+head):head+html;
+ const reg='<script>if("serviceWorker" in navigator)addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});<\/script>';
+ html=/<\/body>/i.test(html)?html.replace(/<\/body>/i,m=>reg+m):html+reg;
+ const manifest={name:nm,short_name:nm.slice(0,12),start_url:'./index.html',scope:'./',display:'standalone',orientation:'any',background_color:'#0b0d17',theme_color:'#0b0d17',icons:[{src:'icon.svg',sizes:'any',type:'image/svg+xml',purpose:'any maskable'}]};
+ const sw="const C='"+n+"-v1';self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./','./index.html','./icon.svg','./manifest.webmanifest'])));self.skipWaiting()});self.addEventListener('activate',e=>e.waitUntil(clients.claim()));self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const cp=res.clone();caches.open(C).then(c=>c.put(e.request,cp));return res}).catch(()=>caches.match('./index.html'))))});";
+ const icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#7756f1"/><stop offset="1" stop-color="#e063d2"/></linearGradient></defs><rect width="512" height="512" rx="110" fill="url(#g)"/><text x="256" y="350" font-size="300" font-family="system-ui,sans-serif" font-weight="800" text-anchor="middle" fill="#fff">'+letter+'</text></svg>';
+ const readme='Installable web app exported from Antares.\n\n1. Upload this folder to any HTTPS static host (GitHub Pages, Netlify, Cloudflare Pages, Vercel).\n2. Open the site in Chrome/Edge/Safari and choose "Install app" or "Add to Home Screen".\n\nService workers need HTTPS (or localhost); opening index.html from disk still works as a normal page.\n';
+ saveBlob(n+'-pwa.zip',makeZip([{name:n+'/index.html',data:html},{name:n+'/manifest.webmanifest',data:JSON.stringify(manifest,null,1)},{name:n+'/sw.js',data:sw},{name:n+'/icon.svg',data:icon},{name:n+'/README.txt',data:readme}]));toast('PWA package exported. See README.txt inside.')}
+function exportProjectJson(){if(!current)return toast('Open a project first.');saveFile(curName()+'.antares.json',JSON.stringify({app:'antares',version:3,projects:[current]},null,1),'application/json')}
+async function copyCode(){const t=$('source').value;if(!t)return;try{await navigator.clipboard.writeText(t)}catch{const x=document.createElement('textarea');x.value=t;document.body.append(x);x.select();document.execCommand('copy');x.remove()}say('📋 Code copied.')}
+const EXPORTS=[['⬇ HTML file','Single self-contained page',exportHtml],['🗜 ZIP bundle','index.html + project.json',exportZip],['📲 Installable PWA','manifest + offline service worker',exportPwa],['🧾 Project JSON','Backup incl. history & chat',exportProjectJson],['📋 Copy code','To clipboard',copyCode]];
+$('exportMenu').append(...EXPORTS.map(x=>h('button',{onclick:()=>{$('exportMenu').classList.add('hidden');x[2]()}},x[0],h('small',{text:x[1]}))));
+$('exportBtn').onclick=e=>{e.stopPropagation();$('exportMenu').classList.toggle('hidden')};
+addEventListener('click',e=>{if(!e.target.closest('.menu'))$('exportMenu').classList.add('hidden')});
+
+/* ================= toolbar ================= */
+$('run').onclick=()=>{const t=$('source').value;autoOK=false;if(current){current.html=t;commit(t,'Manual edit')}showHtml(t);tab('preview');say('Running edited source.')};
+function undo(){if(current&&current.versions.length>1){redo.push(current.versions.pop());const t=current.versions[current.versions.length-1].html;current.html=t;persist();showHtml(t);renderProjects();renderVersions();say('↩ Restored previous version.')}else toast('Nothing to undo.')}
+function redoIt(){if(current&&redo.length){const v=redo.pop();current.versions.push(v);current.html=v.html;persist();showHtml(v.html);renderProjects();renderVersions();say('↪ Redone.')}else toast('Nothing to redo.')}
+$('undo').onclick=undo;$('redo').onclick=redoIt;$('copy').onclick=copyCode;
+$('newtab').onclick=()=>{const t=$('source').value;if(t)openTab(t)};
+function toggleFull(){tab('preview');document.body.classList.toggle('fs')}
+$('full').onclick=toggleFull;$('exitfs').onclick=()=>document.body.classList.remove('fs');
+$('download').onclick=exportHtml;
+['preview','source','console','versions','chat'].forEach(k=>$(k+'Tab').onclick=()=>tab(k));
+$('clearCons').onclick=()=>{conLog=[];errCount=0;$('consoleTab').textContent='Console';renderConsole()};$('conFilter').onchange=renderConsole;
+$('reload').onclick=()=>{setPreview($('source').value);tab('preview')};
+$('device').onchange=applyDevice;$('rotate').onclick=()=>{landscape=!landscape;applyDevice()};addEventListener('resize',()=>{if($('device').value!=='r')applyDevice()});
+let fpos=0;
+$('findNext').onclick=()=>{const q=$('find').value,t=$('source');if(!q)return;let i=t.value.indexOf(q,fpos);if(i<0)i=t.value.indexOf(q);$('fcount').textContent=(t.value.split(q).length-1)+' found';if(i<0)return toast('Not found.');t.focus();t.setSelectionRange(i,i+q.length);fpos=i+q.length;const line=t.value.slice(0,i).split('\n').length;t.scrollTop=Math.max(0,(line-5)*(parseFloat(getComputedStyle(t).lineHeight)||19))};
+$('find').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('findNext').click()}});
+$('replAll').onclick=()=>{const q=$('find').value,t=$('source');if(!q)return;const n=t.value.split(q).length-1;if(!n)return toast('Not found.');t.value=t.value.split(q).join($('repl').value);t.dispatchEvent(new Event('input'));toast('Replaced '+n+' occurrence'+(n>1?'s':'')+'. Press Run to apply.')};
+$('wrap').onchange=()=>{$('source').style.whiteSpace=$('wrap').checked?'pre-wrap':'pre'};
+$('fplus').onclick=()=>{cfg.codeSize=Math.min(20,cfg.codeSize+1);saveCfg();applyTheme()};$('fminus').onclick=()=>{cfg.codeSize=Math.max(10,cfg.codeSize-1);saveCfg();applyTheme()};
+function pcount(){$('pcounter').textContent=$('prompt').value.length+' chars';try{LS.setItem('antares-draft',$('prompt').value)}catch{}}
+$('prompt').addEventListener('input',pcount);
+$('auto').onchange=()=>{cfg.auto=$('auto').checked;saveCfg()};
+$('badge').onclick=openSettings;$('openSettings').onclick=openSettings;$('openSettings2').onclick=openSettings;
+$('style').value=LS.getItem('antares-style')||'';$('style').onchange=()=>{try{LS.setItem('antares-style',$('style').value)}catch{}};
+
+/* ================= left views: powers, templates, prompts, insights ================= */
+function renderPowers(){const box=$('powers');box.replaceChildren(...Object.entries(POWER).map(([k,v])=>h('button',{class:powers.has(k)?'on':'',text:v[0],title:v[1],onclick:()=>{powers.has(k)?powers.delete(k):powers.add(k);store.set('antares-powers',[...powers]);renderPowers()}})))}
+function renderChips(box,list){box.replaceChildren(...list.map(q=>h('button',{text:q[0],title:q[1],onclick:()=>quick(q[1])})))}
+const TEMPLATES=[
+['Games',[['🐍 Snake','game2d','Create a polished snake game with levels, increasing speed, saved high score, swipe and keyboard controls, sound effects and a game-over screen'],['🏃 Platformer','game2d','Create a 2D platformer game with coins, enemies, three levels, jump physics, touch buttons and keyboard controls'],['🧱 Tetris','game2d','Create a Tetris clone with ghost piece, hold slot, next queue, line-clear animations, levels, saved high score, keyboard and touch controls'],['🚀 Space shooter','game2d','Create a vertical space shooter with waves, bosses, power-ups, particle explosions, parallax stars, sound effects, touch drag controls and a saved high score'],['🧠 Memory match','game2d','Create a memory card matching game with emoji cards, flip animations, move counter, timer, three difficulty levels and best scores'],['🏎 Racing','game2d','Create a top-down racing game with lap timer, drifting physics, AI opponents, three tracks, touch steering and best lap saves'],['🌃 3D Runner','game3d','Create a 3D endless runner with Three.js, neon style, lanes, obstacles, score, speed ramp and touch swipe controls'],['♟ Chess','game2d','Create a full chess game with legal move validation, check/checkmate detection, move highlights, captured pieces, undo and a simple AI opponent']]],
+['Apps',[['✅ Tasks','','Create a task manager with categories, due dates, priorities, search, drag to reorder and saved data'],['💸 Expenses','dash','Create an expense tracker dashboard with charts, monthly budget, categories and CSV export'],['🗂 Kanban','','Create a Kanban board with draggable cards, multiple boards, labels, due dates, search and saved data'],['📝 Notes','','Create a markdown notes app with folders, live preview, tags, search, pinned notes, dark/light theme and saved data'],['⏱ Pomodoro','','Create a Pomodoro focus timer with sessions, statistics charts, custom durations, sound alerts and saved history'],['🧮 Calculator','','Create a scientific calculator with history, keyboard support, themes and unit converter tab'],['❓ Quiz','','Create a quiz app with 5 categories, timer, streak bonuses, results screen with review and saved best scores'],['💪 Habit tracker','','Create a habit tracker with streaks, calendar heatmap, reminders UI, statistics charts and saved data']]],
+['Dashboards',[['📈 Sales KPI','dash','Create a sales analytics dashboard with KPI cards, revenue line chart, regional bar chart, funnel, date filters and CSV export using sample data'],['🏋 Fitness','dash','Create a fitness progress dashboard with workout log, weekly charts, personal records and goal rings']]],
+['Sites',[['🌐 AI landing page','site','Create a stunning landing page for an AI startup with hero, features, pricing, testimonials and FAQ'],['🎨 Portfolio','site','Create a creative developer portfolio with animated hero, project grid with filters, skills, timeline and contact form UI'],['🍽 Restaurant','site','Create a luxury restaurant website with hero video-style animation, menu tabs, reservation form UI, gallery built from CSS art and map-style contact section']]]];
+function renderTemplates(){const q=$('tplq').value.trim().toLowerCase(),box=$('tpl');box.replaceChildren();
+ TEMPLATES.forEach(c=>{const items=c[1].filter(t=>!q||(t[0]+' '+t[2]).toLowerCase().includes(q));if(!items.length)return;box.append(h('div',{class:'cat',text:c[0]}));items.forEach(t=>box.append(h('button',{text:t[0],onclick:()=>{$('prompt').value=t[2];$('mode').value=t[1];pcount();toast('Template loaded. Edit it or tap Build.')}})))})}
+$('tplq').oninput=renderTemplates;
+function usePrompt(p){$('prompt').value=p.text;if(p.mode!=null)$('mode').value=p.mode;pcount();view('create');$('prompt').focus()}
+function renderPrompts(){const sv=store.get('antares-saved-prompts',[]),rc=store.get('antares-recent-prompts',[]);
+ const card=(p,actions)=>h('div',{class:'lib'},p.name?h('b',{text:p.name}):null,h('p',{text:p.text}),h('div',{class:'row'},actions));
+ $('saved').replaceChildren(...(sv.length?sv.map(p=>card(p,[h('button',{class:'sm',text:'Use',onclick:()=>usePrompt(p)}),h('button',{class:'sm ghost',text:'Delete',onclick:()=>{store.set('antares-saved-prompts',store.get('antares-saved-prompts',[]).filter(x=>x.id!==p.id));renderPrompts()}})])):[h('div',{class:'empty',text:'Nothing saved yet. Write a prompt and tap ★ Save prompt.'})]));
+ $('recent').replaceChildren(...(rc.length?rc.map(p=>card(p,[h('button',{class:'sm',text:'Use',onclick:()=>usePrompt(p)}),h('button',{class:'sm',text:'★ Save',onclick:()=>savePromptText(p.text,p.mode)})])):[h('div',{class:'empty',text:'Your recent build prompts will appear here.'})]))}
+async function savePromptText(text,mode){if(!text)return toast('Write a prompt first.');const nm=await askText('Name this prompt',text.slice(0,32));if(nm==null)return;const l=store.get('antares-saved-prompts',[]);l.unshift({id:uid(),name:nm||text.slice(0,32),text:text,mode:mode||''});store.set('antares-saved-prompts',l.slice(0,60));toast('Prompt saved.');renderPrompts()}
+$('savePrompt').onclick=()=>savePromptText($('prompt').value.trim(),$('mode').value);
+$('clearRecent').onclick=()=>{store.set('antares-recent-prompts',[]);renderPrompts()};
+function renderInsights(){const box=$('insights'),tile=(a,b)=>h('div',{class:'tile'},h('b',{text:String(a)}),h('small',{text:b}));
+ const by={};projects.forEach(p=>{const k=MODE_NAMES[p.mode||''];by[k]=(by[k]||0)+1});const max=Math.max(1,...Object.values(by));
+ box.replaceChildren(h('div',{class:'tiles'},tile(projects.length,'Projects'),tile(stats.builds,'AI builds'),tile(stats.refines,'Refinements'),tile(stats.fixes,'Auto-fixes'),tile(fmtN(stats.tin+stats.tout),'Tokens (approx.)'),tile('$'+stats.cost.toFixed(4),'Spend tracked'),tile(kb(stats.chars),'Code generated'),tile(projects.reduce((a,p)=>a+p.versions.length,0),'Versions saved')),
+  h('label',{text:'Projects by type'}),Object.keys(by).length?Object.entries(by).map(([k,v])=>h('div',{class:'bar'},k+' · '+v,h('i',{style:'width:'+Math.round(v/max*100)+'%'}))):h('div',{class:'empty',text:'No data yet.'}),
+  h('button',{class:'ghost wide',text:'Reset statistics',onclick:()=>{stats={builds:0,refines:0,fixes:0,tin:0,tout:0,cost:0,chars:0};store.set('antares-stats',stats);renderInsights()}}))}
+function view(v){['create','projects','prompts','insights'].forEach(k=>{$('v-'+k).classList.toggle('hidden',k!==v)});document.querySelectorAll('#sideNav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));if(v==='projects')renderProjects();if(v==='prompts')renderPrompts();if(v==='insights')renderInsights()}
+document.querySelectorAll('#sideNav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
+
+/* ================= command palette, help, shortcuts ================= */
+function commands(){const c=[['Build with AI','Ctrl+Enter',()=>$('generate').click()],['Refine current project','',()=>$('refine').click()],['Enhance prompt','',()=>$('enhance').click()],['New project','',()=>$('newProj').click()],['Open settings','Ctrl+,',openSettings],['Download HTML','Ctrl+S',exportHtml],['Export ZIP bundle','',exportZip],['Export installable PWA','',exportPwa],['Export project JSON','',exportProjectJson],['Copy code','',copyCode],['Run edited source','',()=>$('run').click()],['Undo','',undo],['Redo','',redoIt],['Toggle fullscreen preview','F11',toggleFull],['Show: Live preview','',()=>tab('preview')],['Show: Code','',()=>tab('source')],['Show: Console','',()=>tab('console')],['Show: History','',()=>tab('versions')],['Show: Chat','',()=>tab('chat')],['Go to Create','Alt+1',()=>view('create')],['Go to Projects','Alt+2',()=>view('projects')],['Go to Prompts','Alt+3',()=>view('prompts')],['Go to Insights','Alt+4',()=>view('insights')],['Keyboard shortcuts','?',openHelp]];
+ Object.entries(THEMES).forEach(([k,v])=>c.push(['Theme: '+v,'',()=>{cfg.theme=k;saveCfg();applyTheme()}]));
+ projects.slice(0,30).forEach(p=>c.push(['Open: '+p.name,MODE_NAMES[p.mode||''],()=>openProject(p)]));return c}
+function openPalette(){let sel=0,list=[];const inp=h('input',{type:'text',placeholder:'Type a command or project name…'}),box=h('div',{class:'list'}),ov=h('div',{class:'ovl'},h('div',{class:'pal'},inp,box));const all=commands();
+ const close=()=>{ov.remove();removeEventListener('keydown',key,true)};
+ const run=i=>{const it=list[i];if(it){close();it[2]()}};
+ const draw=()=>{const q=inp.value.trim().toLowerCase().split(/\s+/).filter(Boolean);list=all.filter(c=>q.every(w=>c[0].toLowerCase().includes(w))).slice(0,40);sel=Math.min(sel,Math.max(0,list.length-1));box.replaceChildren(...(list.length?list.map((c,i)=>h('div',{class:'it'+(i===sel?' on':''),onclick:()=>run(i)},h('span',{text:c[0]}),h('small',{text:c[1]}))):[h('div',{class:'empty',text:'No matches'})]));const on=box.querySelector('.on');if(on)on.scrollIntoView({block:'nearest'})};
+ const key=e=>{if(e.key==='Escape'){e.stopPropagation();close()}else if(e.key==='ArrowDown'){e.preventDefault();sel=Math.min(list.length-1,sel+1);draw()}else if(e.key==='ArrowUp'){e.preventDefault();sel=Math.max(0,sel-1);draw()}else if(e.key==='Enter'){e.preventDefault();run(sel)}};
+ inp.oninput=()=>{sel=0;draw()};ov.onmousedown=e=>{if(e.target===ov)close()};addEventListener('keydown',key,true);document.body.append(ov);draw();inp.focus()}
+$('cmdk').onclick=openPalette;
+function openHelp(){const rows=[['Ctrl + K','Command palette'],['Ctrl + Enter','Build with AI'],['Ctrl + S','Download HTML'],['Ctrl + ,','Settings'],['Alt + 1…4','Create · Projects · Prompts · Insights'],['Esc','Close dialogs / exit fullscreen'],['?','This help'],['Enter (in Chat)','Send message']];
+ modal('Keyboard shortcuts',h('div',null,rows.map(r=>h('div',{class:'row',style:'padding:6px 0;border-bottom:1px solid var(--line)'},h('span',{class:'fit',style:'min-width:150px'},h('kbd',{text:r[0]})),h('span',{text:r[1]})))),[{label:'Close',cls:'primary'}])}
+$('openHelp').onclick=openHelp;
+addEventListener('keydown',e=>{const mod=e.ctrlKey||e.metaKey;
+ if(mod&&e.key.toLowerCase()==='k'){e.preventDefault();openPalette()}
+ else if(mod&&e.key==='Enter'){e.preventDefault();$('generate').click()}
+ else if(mod&&e.key.toLowerCase()==='s'){e.preventDefault();exportHtml()}
+ else if(mod&&e.key===','){e.preventDefault();openSettings()}
+ else if(e.altKey&&/^[1-4]$/.test(e.key)){e.preventDefault();view(['create','projects','prompts','insights'][+e.key-1])}
+ else if(e.key==='Escape')document.body.classList.remove('fs');
+ else if(e.key==='?'&&!/INPUT|TEXTAREA|SELECT/.test((e.target&&e.target.tagName)||'')&&!document.querySelector('.ovl'))openHelp()});
+
+/* ================= ambient starfield + splash ================= */
+let bgRaf=0;
+(function(){const c=$('bg'),x=c.getContext('2d');let W=0,H=0,pts=[],col='255,255,255';
+ const size=()=>{W=c.width=innerWidth;H=c.height=innerHeight;pts=Array.from({length:Math.min(110,Math.floor(W*H/20000))},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,s:Math.random()*.3+.05,a:Math.random()*Math.PI*2}))};
+ const frame=()=>{x.clearRect(0,0,W,H);for(const p of pts){p.y-=p.s;p.a+=.02;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}x.fillStyle='rgba('+col+','+(.25+.45*Math.abs(Math.sin(p.a)))+')';x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fill()}bgRaf=requestAnimationFrame(frame)};
+ window.bgRefresh=()=>{col=getComputedStyle(document.documentElement).getPropertyValue('--star').trim()||'255,255,255'};
+ window.startBg=()=>{if(bgRaf||matchMedia('(prefers-reduced-motion:reduce)').matches)return;size();bgRefresh();bgRaf=requestAnimationFrame(frame)};
+ window.stopBg=()=>{cancelAnimationFrame(bgRaf);bgRaf=0;x.clearRect(0,0,W,H)};
+ addEventListener('resize',()=>{if(bgRaf)size()});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(bgRaf);bgRaf=0}else if(cfg.bg)startBg()})})();
+
+/* ================= init ================= */
+(async function init(){
+ $('auto').checked=cfg.auto;$('prompt').value=LS.getItem('antares-draft')||'';
+ applyTheme();refreshModel();renderPowers();renderChips($('qr'),QUICK);renderChips($('qr2'),QUICK);renderTemplates();pcount();
+ projects=await loadProjects();
+ if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+ renderProjects();renderPrompts();openWelcome();
+ if(cfg.bg)startBg();
+ const sp=$('splash');let seen=false;try{seen=sessionStorage.getItem('antares-splash')}catch{}
+ const hide=()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),900);try{sessionStorage.setItem('antares-splash','1')}catch{}if(!cfg.key)setTimeout(openSettings,500)};
+ if(seen)hide();else{sp.onclick=hide;setTimeout(hide,1500)}
+})();
 </script>
 </body>
 </html>
